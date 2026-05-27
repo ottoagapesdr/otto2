@@ -473,47 +473,43 @@ const PLANS = {
 };
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   LINKS DE PAGAMENTO — substitua cada # pelo link gerado no Mercado Pago
-   Chave: plano_período_qtd
-     plano:   one | pro | prime
-     período: m (mensal) | a (anual)
-     qtd:     0=sem bump | 5 | 10 | 15 | 20 unidades
-   Para qtd > 20 os botões redirecionam automaticamente para o WhatsApp.
+   PAGAMENTO DINÂMICO — links gerados via API Mercado Pago
 ══════════════════════════════════════════════════════════════════════════════ */
-const LINKS = {
-  one_m_0:    { card:'#MP_ONE_M_0_CARD',    pix:'#MP_ONE_M_0_PIX'    },
-  one_m_5:    { card:'#MP_ONE_M_5_CARD',    pix:'#MP_ONE_M_5_PIX'    },
-  one_m_10:   { card:'#MP_ONE_M_10_CARD',   pix:'#MP_ONE_M_10_PIX'   },
-  one_m_15:   { card:'#MP_ONE_M_15_CARD',   pix:'#MP_ONE_M_15_PIX'   },
-  one_m_20:   { card:'#MP_ONE_M_20_CARD',   pix:'#MP_ONE_M_20_PIX'   },
-  one_a_0:    { card:'#MP_ONE_A_0_CARD',    pix:'#MP_ONE_A_0_PIX'    },
-  one_a_5:    { card:'#MP_ONE_A_5_CARD',    pix:'#MP_ONE_A_5_PIX'    },
-  one_a_10:   { card:'#MP_ONE_A_10_CARD',   pix:'#MP_ONE_A_10_PIX'   },
-  one_a_15:   { card:'#MP_ONE_A_15_CARD',   pix:'#MP_ONE_A_15_PIX'   },
-  one_a_20:   { card:'#MP_ONE_A_20_CARD',   pix:'#MP_ONE_A_20_PIX'   },
+const API_URL = 'https://otto2-six.vercel.app/api/checkout';
 
-  pro_m_0:    { card:'#MP_PRO_M_0_CARD',    pix:'#MP_PRO_M_0_PIX'    },
-  pro_m_5:    { card:'#MP_PRO_M_5_CARD',    pix:'#MP_PRO_M_5_PIX'    },
-  pro_m_10:   { card:'#MP_PRO_M_10_CARD',   pix:'#MP_PRO_M_10_PIX'   },
-  pro_m_15:   { card:'#MP_PRO_M_15_CARD',   pix:'#MP_PRO_M_15_PIX'   },
-  pro_m_20:   { card:'#MP_PRO_M_20_CARD',   pix:'#MP_PRO_M_20_PIX'   },
-  pro_a_0:    { card:'#MP_PRO_A_0_CARD',    pix:'#MP_PRO_A_0_PIX'    },
-  pro_a_5:    { card:'#MP_PRO_A_5_CARD',    pix:'#MP_PRO_A_5_PIX'    },
-  pro_a_10:   { card:'#MP_PRO_A_10_CARD',   pix:'#MP_PRO_A_10_PIX'   },
-  pro_a_15:   { card:'#MP_PRO_A_15_CARD',   pix:'#MP_PRO_A_15_PIX'   },
-  pro_a_20:   { card:'#MP_PRO_A_20_CARD',   pix:'#MP_PRO_A_20_PIX'   },
+async function gerarLink(tipo) {
+  const btnId = tipo === 'card' ? 'btn-card' : 'btn-avista';
+  const btn = document.getElementById(btnId);
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '⏳ Gerando link...';
+  btn.style.pointerEvents = 'none';
+  btn.style.opacity = '0.7';
 
-  prime_m_0:  { card:'#MP_PRIME_M_0_CARD',  pix:'#MP_PRIME_M_0_PIX'  },
-  prime_m_5:  { card:'#MP_PRIME_M_5_CARD',  pix:'#MP_PRIME_M_5_PIX'  },
-  prime_m_10: { card:'#MP_PRIME_M_10_CARD', pix:'#MP_PRIME_M_10_PIX' },
-  prime_m_15: { card:'#MP_PRIME_M_15_CARD', pix:'#MP_PRIME_M_15_PIX' },
-  prime_m_20: { card:'#MP_PRIME_M_20_CARD', pix:'#MP_PRIME_M_20_PIX' },
-  prime_a_0:  { card:'#MP_PRIME_A_0_CARD',  pix:'#MP_PRIME_A_0_PIX'  },
-  prime_a_5:  { card:'#MP_PRIME_A_5_CARD',  pix:'#MP_PRIME_A_5_PIX'  },
-  prime_a_10: { card:'#MP_PRIME_A_10_CARD', pix:'#MP_PRIME_A_10_PIX' },
-  prime_a_15: { card:'#MP_PRIME_A_15_CARD', pix:'#MP_PRIME_A_15_PIX' },
-  prime_a_20: { card:'#MP_PRIME_A_20_CARD', pix:'#MP_PRIME_A_20_PIX' },
-};
+  const bumps = state.bumpOn ? [state.bumpType] : [];
+  const plano = 'biz-' + state.plan + '-' + (state.billing === 'a' ? 'anual' : 'mensal');
+  const quantidade = state.qty || 1;
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plano, bumps, quantidade })
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.open(data.url, '_blank');
+    } else {
+      alert('Erro ao gerar link de pagamento. Tente novamente ou entre em contato: (11) 96379-8901');
+    }
+  } catch (e) {
+    alert('Erro de conexão. Verifique sua internet e tente novamente.');
+  } finally {
+    btn.innerHTML = originalHTML;
+    btn.style.pointerEvents = '';
+    btn.style.opacity = '';
+  }
+}
+
 const WA = 'https://wa.me/5511963798901?text=';
 
 const state = { plan:'pro', billing:'m', bumpOn:false, qty:5, product:'pralink' };
@@ -584,11 +580,6 @@ function fmt(n){ return Number(n).toLocaleString('pt-BR'); }
 function sRow(l,v,note=false){ return '<div class="s-row'+(note?' note-row':'')+'"><span class="sl">'+l+'</span><span class="sv">'+v+'</span></div>'; }
 
 function getQtyBracket(q){ return q<=7?5:q<=12?10:q<=17?15:q<=22?20:0; }
-function getLinkKey(){
-  const bk=state.bumpOn?getQtyBracket(state.qty):0;
-  return state.plan+'_'+state.billing+'_'+bk;
-}
-
 function render(){
   const plan=PLANS[state.plan]; const isA=state.billing==='a'; const isPrime=state.plan==='prime';
   document.getElementById('price-m').innerHTML='R$'+fmt(plan.monthly)+'<small>/mês</small>';
@@ -631,10 +622,12 @@ function render(){
   } else {
     baseCard  = plan.setup.card;
     cardTotal = baseCard + bumpCard;
-    cardLabel = 'R$'+fmt(plan.setup.card);
-    if(state.bumpOn) cardLabel = 'R$'+fmt(cardTotal);
+    cardLabel = 'R$'+fmt(cardTotal); // sempre total
   }
-  document.getElementById('total-card').textContent=cardLabel;
+  // Mostra total + opção de parcelamento abaixo
+  const parcelas = Math.ceil(cardTotal / 10);
+  const parcelaInfo = ' <small style="color:var(--muted);font-size:11px">ou 10× R$'+fmt(parcelas)+'</small>';
+  document.getElementById('total-card').innerHTML = cardLabel + parcelaInfo;
 
   /* Tag e nota */
   const bonusWrap = document.getElementById('bonus-wrap');
@@ -655,21 +648,19 @@ function render(){
   document.getElementById('pay-tag').textContent=tag;
   document.getElementById('pay-note').textContent=note;
 
-  /* Links */
-  const key=getLinkKey();
-  const overBracket=state.bumpOn&&state.qty>22;
-  if(overBracket){
-    const msg=encodeURIComponent('Olá! Quero contratar OTTO Business '+plan.tier+' com '+state.qty+' unidades de '+pname+'. Pode me enviar o link de pagamento?');
-    document.getElementById('btn-card').href=WA+msg;
-    document.getElementById('btn-avista').href=WA+msg;
-    document.getElementById('btn-card').textContent='Finalizar via WhatsApp';
-    document.getElementById('btn-avista').textContent='Finalizar via WhatsApp';
+  /* Links — dinâmicos via API */
+  const overBracket = state.bumpOn && state.qty > 22;
+  if (overBracket) {
+    const msg = encodeURIComponent('Olá! Quero contratar OTTO Business '+plan.tier+' com '+state.qty+' unidades de '+pname+'. Pode me enviar o link de pagamento?');
+    document.getElementById('btn-card').onclick   = (e) => { e.preventDefault(); window.open(WA+msg, '_blank'); };
+    document.getElementById('btn-avista').onclick = (e) => { e.preventDefault(); window.open(WA+msg, '_blank'); };
+    document.getElementById('btn-card').textContent   = 'Finalizar via WhatsApp';
+    document.getElementById('btn-avista').textContent = 'Finalizar via WhatsApp';
   } else {
-    const lk=LINKS[key]||{card:'#',pix:'#'};
-    document.getElementById('btn-card').href=lk.card;
-    document.getElementById('btn-avista').href=lk.pix;
-    document.getElementById('btn-card').innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17" style="flex:0 0 17px"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> ${state.bumpOn?'Pagar parcelado':'Pagar parcelado'}`;
-    document.getElementById('btn-avista').innerHTML=`<svg viewBox="0 0 24 24" width="17" height="17" style="flex:0 0 17px" fill="currentColor"><path d="M11.07 2.93a1.32 1.32 0 011.86 0l2.36 2.36a.44.44 0 00.31.13h.93a2.64 2.64 0 012.64 2.64v.93c0 .12.05.23.13.31l2.36 2.36a1.32 1.32 0 010 1.86l-2.36 2.36a.44.44 0 00-.13.31v.93a2.64 2.64 0 01-2.64 2.64h-.93a.44.44 0 00-.31.13l-2.36 2.36a1.32 1.32 0 01-1.86 0l-2.36-2.36a.44.44 0 00-.31-.13h-.93A2.64 2.64 0 015.43 17v-.93a.44.44 0 00-.13-.31L2.94 13.4a1.32 1.32 0 010-1.86l2.36-2.36a.44.44 0 00.13-.31V8a2.64 2.64 0 012.64-2.64h.93a.44.44 0 00.31-.13l2.36-2.36z"/></svg> ${state.bumpOn?'Pagar no PIX':'Pagar no PIX'}`;
+    document.getElementById('btn-card').onclick   = (e) => { e.preventDefault(); gerarLink('card'); };
+    document.getElementById('btn-avista').onclick = (e) => { e.preventDefault(); gerarLink('avista'); };
+    document.getElementById('btn-card').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17" style="flex:0 0 17px"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> ${state.bumpOn?'Pagar parcelado':'Pagar parcelado'}`;
+    document.getElementById('btn-avista').innerHTML = `<svg viewBox="0 0 24 24" width="17" height="17" style="flex:0 0 17px" fill="currentColor"><path d="M11.07 2.93a1.32 1.32 0 011.86 0l2.36 2.36a.44.44 0 00.31.13h.93a2.64 2.64 0 012.64 2.64v.93c0 .12.05.23.13.31l2.36 2.36a1.32 1.32 0 010 1.86l-2.36 2.36a.44.44 0 00-.13.31v.93a2.64 2.64 0 01-2.64 2.64h-.93a.44.44 0 00-.31.13l-2.36 2.36a1.32 1.32 0 01-1.86 0l-2.36-2.36a.44.44 0 00-.31-.13h-.93A2.64 2.64 0 015.43 17v-.93a.44.44 0 00-.13-.31L2.94 13.4a1.32 1.32 0 010-1.86l2.36-2.36a.44.44 0 00.13-.31V8a2.64 2.64 0 012.64-2.64h.93a.44.44 0 00.31-.13l2.36-2.36z"/></svg> ${state.bumpOn?'Pagar no PIX':'Pagar no PIX'}`;
   }
 }
 render();

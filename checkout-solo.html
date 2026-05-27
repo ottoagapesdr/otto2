@@ -561,44 +561,45 @@ const PLANS = {
 };
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   LINKS DE PAGAMENTO — substitua cada # pelo link gerado no Mercado Pago
-   Chave: plano_período_bumps
-     plano:   start | pro | black
-     período: m (mensal) | a (anual)
-     bumps:   0=nenhum | pl=só PraLink | ws=só Site | plws=PraLink+Site
-   O Mercado Pago deve conter o valor TOTAL de cada combinação.
-   Manutenção anual (R$57/mês) tem link próprio — sempre pago separado.
+   PAGAMENTO DINÂMICO — links gerados via API Mercado Pago
 ══════════════════════════════════════════════════════════════════════════════ */
-const LINKS = {
-  start_m_0:    { card:'#MP_START_M_0_CARD',    pix:'#MP_START_M_0_PIX'    },
-  start_m_pl:   { card:'#MP_START_M_PL_CARD',   pix:'#MP_START_M_PL_PIX'   },
-  start_m_ws:   { card:'#MP_START_M_WS_CARD',   pix:'#MP_START_M_WS_PIX'   },
-  start_m_plws: { card:'#MP_START_M_PLWS_CARD', pix:'#MP_START_M_PLWS_PIX' },
-  start_a_0:    { card:'#MP_START_A_0_CARD',    pix:'#MP_START_A_0_PIX'    },
-  start_a_pl:   { card:'#MP_START_A_PL_CARD',   pix:'#MP_START_A_PL_PIX'   },
-  start_a_ws:   { card:'#MP_START_A_WS_CARD',   pix:'#MP_START_A_WS_PIX'   },
-  start_a_plws: { card:'#MP_START_A_PLWS_CARD', pix:'#MP_START_A_PLWS_PIX' },
+const API_URL = 'https://otto2-six.vercel.app/api/checkout';
 
-  pro_m_0:      { card:'#MP_PRO_M_0_CARD',      pix:'#MP_PRO_M_0_PIX'      },
-  pro_m_pl:     { card:'#MP_PRO_M_PL_CARD',     pix:'#MP_PRO_M_PL_PIX'     },
-  pro_m_ws:     { card:'#MP_PRO_M_WS_CARD',     pix:'#MP_PRO_M_WS_PIX'     },
-  pro_m_plws:   { card:'#MP_PRO_M_PLWS_CARD',   pix:'#MP_PRO_M_PLWS_PIX'   },
-  pro_a_0:      { card:'#MP_PRO_A_0_CARD',      pix:'#MP_PRO_A_0_PIX'      },
-  pro_a_pl:     { card:'#MP_PRO_A_PL_CARD',     pix:'#MP_PRO_A_PL_PIX'     },
-  pro_a_ws:     { card:'#MP_PRO_A_WS_CARD',     pix:'#MP_PRO_A_WS_PIX'     },
-  pro_a_plws:   { card:'#MP_PRO_A_PLWS_CARD',   pix:'#MP_PRO_A_PLWS_PIX'   },
+async function gerarLink(tipo) {
+  const btnId = tipo === 'card' ? 'btn-card' : 'btn-avista';
+  const btn = document.getElementById(btnId);
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '⏳ Gerando link...';
+  btn.style.pointerEvents = 'none';
+  btn.style.opacity = '0.7';
 
-  black_m_0:    { card:'#MP_BLACK_M_0_CARD',    pix:'#MP_BLACK_M_0_PIX'    },
-  black_m_pl:   { card:'#MP_BLACK_M_PL_CARD',   pix:'#MP_BLACK_M_PL_PIX'   },
-  black_m_ws:   { card:'#MP_BLACK_M_WS_CARD',   pix:'#MP_BLACK_M_WS_PIX'   },
-  black_m_plws: { card:'#MP_BLACK_M_PLWS_CARD', pix:'#MP_BLACK_M_PLWS_PIX' },
-  black_a_0:    { card:'#MP_BLACK_A_0_CARD',    pix:'#MP_BLACK_A_0_PIX'    },
-  black_a_pl:   { card:'#MP_BLACK_A_PL_CARD',   pix:'#MP_BLACK_A_PL_PIX'   },
-  black_a_ws:   { card:'#MP_BLACK_A_WS_CARD',   pix:'#MP_BLACK_A_WS_PIX'   },
-  black_a_plws: { card:'#MP_BLACK_A_PLWS_CARD', pix:'#MP_BLACK_A_PLWS_PIX' },
-};
-/* Manutenção anual — link único independente de plano/billing */
-const LINK_MANUTENCAO = { card:'#MP_MANUTENCAO_CARD', pix:'#MP_MANUTENCAO_PIX' };
+  const bumps = [];
+  if (state.bumps.has('pralink')) bumps.push('pralink');
+  if (state.bumps.has('website')) bumps.push('site');
+  if (state.upsell && state.bumps.has('website')) bumps.push('manutencao');
+
+  const plano = 'solo-' + state.plan + '-' + (state.billing === 'a' ? 'anual' : 'mensal');
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plano, bumps })
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.open(data.url, '_blank');
+    } else {
+      alert('Erro ao gerar link de pagamento. Tente novamente ou entre em contato: (11) 96379-8901');
+    }
+  } catch (e) {
+    alert('Erro de conexão. Verifique sua internet e tente novamente.');
+  } finally {
+    btn.innerHTML = originalHTML;
+    btn.style.pointerEvents = '';
+    btn.style.opacity = '';
+  }
+}
 
 const state = { plan:'pro', billing:'m', bumps: new Set(), upsell: false, bonus: false, bonusManutencao: false };
 
@@ -710,12 +711,6 @@ function checkSiteBonus(){
 function fmt(n){ return Number(n).toLocaleString('pt-BR'); }
 function sRow(l,v,note=false){ return '<div class="s-row'+(note?' note-row':'')+'"><span class="sl">'+l+'</span><span class="sv">'+v+'</span></div>'; }
 
-function getLinkKey(){
-  const pl=state.bumps.has('pralink'), ws=state.bumps.has('website');
-  const bk=pl&&ws?'plws':pl?'pl':ws?'ws':'0';
-  return state.plan+'_'+state.billing+'_'+bk;
-}
-
 function render(){
   const plan=PLANS[state.plan]; const isA=state.billing==='a';
   const hasPL=state.bumps.has('pralink'), hasWS=state.bumps.has('website');
@@ -770,9 +765,12 @@ function render(){
   if(hasPL){ cardTotal+=444; }
   if(hasWS){ cardTotal+=660; }
 
-  let cardLabel = isA ? 'R$'+fmt(cardTotal) : plan.setup.n+'× R$'+fmt(plan.setup.amt);
-  if(!isA && (hasPL||hasWS)) cardLabel = 'R$'+fmt(cardTotal);
-  document.getElementById('total-card').innerHTML = cardLabel+(state.upsell&&hasWS?' <small>+ R$57/mês</small>':'');
+  // Sempre mostra o valor total — cliente escolhe PIX ou parcelado ao clicar
+  let cardLabel = 'R$'+fmt(cardTotal);
+  let parcelaInfo = '';
+  if(!isA){ parcelaInfo = ' <small style="color:var(--muted);font-size:11px">ou '+plan.setup.n+'× R$'+fmt(plan.setup.amt)+'</small>'; }
+  else { parcelaInfo = ' <small style="color:var(--muted);font-size:11px">ou 12× R$'+fmt(Math.round(cardTotal/12))+'</small>'; }
+  document.getElementById('total-card').innerHTML = cardLabel + parcelaInfo + (state.upsell&&hasWS?' <small>+ R$57/mês</small>':'');
 
   /* Tag e nota */
   const hasBumps=hasPL||hasWS;
@@ -789,10 +787,9 @@ function render(){
   if(state.upsell&&hasWS) note += ' A Manutenção Anual será cobrada a partir da publicação do site.';
   document.getElementById('pay-note').textContent=note;
 
-  /* Links */
-  const lk=LINKS[getLinkKey()]||{card:'#',pix:'#'};
-  document.getElementById('btn-card').href   = lk.card;
-  document.getElementById('btn-avista').href = lk.pix;
+  /* Links — dinâmicos via API */
+  document.getElementById('btn-card').onclick   = (e) => { e.preventDefault(); gerarLink('card'); };
+  document.getElementById('btn-avista').onclick = (e) => { e.preventDefault(); gerarLink('avista'); };
 
   /* Labels dos botões */
   document.getElementById('btn-card').innerHTML   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17" style="flex:0 0 17px"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> ' + (hasBumps ? 'Pagar parcelado' : 'Pagar parcelado');
