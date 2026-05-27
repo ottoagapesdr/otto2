@@ -46,7 +46,11 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { plano, bumps = [], quantidade = 1 } = req.body || {};
+    let bodyParsed = req.body || {};
+    if (typeof bodyParsed === 'string') {
+      try { bodyParsed = JSON.parse(bodyParsed); } catch { bodyParsed = {}; }
+    }
+    const { plano, bumps = [], quantidade = 1 } = bodyParsed;
     const config = PRECOS[plano];
 
     if (!config) {
