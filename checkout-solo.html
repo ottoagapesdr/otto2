@@ -792,7 +792,7 @@ function render(){
 
   /* Links — dinâmicos via API */
   document.getElementById('btn-card').onclick   = (e) => { e.preventDefault(); gerarLink('card'); };
-  document.getElementById('btn-avista').onclick = (e) => { e.preventDefault(); gerarLink('avista'); };
+  document.getElementById('btn-avista').onclick = (e) => { e.preventDefault(); gerarLink('pix'); };
 
   /* Labels dos botões */
   document.getElementById('btn-card').innerHTML   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17" style="flex:0 0 17px"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> ' + (hasBumps ? 'Pagar parcelado' : 'Pagar parcelado');
