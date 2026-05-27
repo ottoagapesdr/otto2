@@ -425,7 +425,7 @@ img{max-width:100%;display:block}
           </div>
 
           <div class="bump-prod featured-bump" data-bump="website" onclick="toggleBump('website')">
-            <div class="bump-featured-tag">Mais completo</div>
+            <div class="bump-featured-tag">Mais completo com bônus exclusivo</div>
             <div class="bump-check-box"></div>
             <div class="bump-prod-icon">WS</div>
             <div class="bump-prod-info">
@@ -766,11 +766,14 @@ function render(){
   if(hasWS){ cardTotal+=660; }
 
   // Sempre mostra o valor total — cliente escolhe PIX ou parcelado ao clicar
-  let cardLabel = 'R$'+fmt(cardTotal);
-  let parcelaInfo = '';
-  if(!isA){ parcelaInfo = ' <small style="color:var(--muted);font-size:11px">ou '+plan.setup.n+'× R$'+fmt(plan.setup.amt)+'</small>'; }
-  else { parcelaInfo = ' <small style="color:var(--muted);font-size:11px">ou 12× R$'+fmt(Math.round(cardTotal/12))+'</small>'; }
-  document.getElementById('total-card').innerHTML = cardLabel + parcelaInfo + (state.upsell&&hasWS?' <small>+ R$57/mês</small>':'');
+  // Mostra valor total parcelado + PIX lado a lado
+  const pixSetup = !isA ? plan.setup.pix : (state.plan==='black'&&state.bonus ? 0 : plan.setup.pix);
+  const pixBase  = isA ? plan.annualTotal + pixSetup : pixSetup;
+  const pixTotal = pixBase + (hasPL?444:0) + (hasWS?660:0);
+  document.getElementById('total-card').innerHTML =
+    'R$'+fmt(cardTotal)+
+    ' <small style="color:var(--muted);font-size:11px">· PIX R$'+fmt(pixTotal)+'</small>'+
+    (state.upsell&&hasWS?' <small>+ R$57/mês</small>':'');
 
   /* Tag e nota */
   const hasBumps=hasPL||hasWS;

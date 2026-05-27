@@ -488,12 +488,13 @@ async function gerarLink(tipo) {
   const bumps = state.bumpOn ? [state.bumpType] : [];
   const plano = 'biz-' + state.plan + '-' + (state.billing === 'a' ? 'anual' : 'mensal');
   const quantidade = state.qty || 1;
+  const bonus = state.bonus || false;
 
   try {
     const res = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ plano, bumps, quantidade })
+      body: JSON.stringify({ plano, tipo, bumps, quantidade, bonus })
     });
     const data = await res.json();
     if (data.url) {
