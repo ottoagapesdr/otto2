@@ -574,9 +574,9 @@ async function gerarLink(tipo) {
   btn.style.opacity = '0.7';
 
   const bumps = [];
-  if (state.bumps.has('pralink')) bumps.push('pralink');
+  if (state.bumps.has('pralink') && !state.bonusManutencao) bumps.push('pralink'); // PraLink não entra se for bônus
   if (state.bumps.has('website')) bumps.push('site');
-  if (state.upsell && state.bumps.has('website')) bumps.push('manutencao');
+  // Manutenção é cobrada separadamente após publicação — não entra na preferência
 
   const plano = 'solo-' + state.plan + '-' + (state.billing === 'a' ? 'anual' : 'mensal');
 
