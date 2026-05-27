@@ -59,6 +59,7 @@ module.exports = async function handler(req, res) {
     }
 
     const { plano, tipo = 'card', bumps = [], quantidade = 1, bonus = false } = bodyParsed;
+    console.log('[OTTO] body recebido:', JSON.stringify({ plano, tipo, bumps, bonus }));
 
     // Resolve chave correta (bonus no Black anual)
     const chave = (plano === 'solo-black-anual' && bonus) ? 'solo-black-anual-bonus' : plano;
