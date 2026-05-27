@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0B1018" />
+<title>Termos de Uso — OTTO</title>
+<meta name="robots" content="noindex, follow" />
+<link rel="icon" type="image/png" href="assets/otto-monogram.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --cream:#0B1018;--cream-2:#11171F;--paper:#181F2A;--paper-2:#212A37;
+  --ink:#F2EEE5;--ink-2:#E6E1D5;--ink-3:#A8A39A;--muted:#707684;
+  --line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.14);
+  --coral:#FF5A1F;--coral-2:#FF7544;--coral-deep:#C73E0C;
+  --wa:#25D366;--wa-2:#1FAB54;
+  --sans:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --maxw:1280px;--r:12px;--r-lg:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--cream);color:var(--ink);font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--coral);outline-offset:3px}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--coral-2);background:rgba(255,90,31,.14);padding:6px 14px;border-radius:999px;border:1px solid rgba(255,90,31,.22)}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 4px rgba(255,90,31,.18)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 24px;font-weight:600;font-size:15px;border-radius:99px;transition:transform .15s ease,box-shadow .2s ease,background .2s ease,color .2s ease,border-color .2s ease;white-space:nowrap}
+.btn-coral{background:var(--coral);color:#fff;box-shadow:0 1px 0 var(--coral-deep) inset,0 8px 20px -8px rgba(255,90,31,.45)}
+.btn-coral:hover{background:var(--coral-2);transform:translateY(-1px)}
+.btn-line{background:var(--paper);color:var(--ink);border:1px solid var(--line-2)}
+.btn-line:hover{background:var(--paper-2);border-color:var(--coral);color:var(--coral-2)}
+.nav{position:sticky;top:0;z-index:50;background:rgba(11,16,24,.85);backdrop-filter:saturate(140%) blur(12px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:22px}
+.nav-brand img{height:32px;width:32px}
+.nav-cta{display:flex;gap:10px;align-items:center}
+.legal-header{padding:80px 0 60px;border-bottom:1px solid var(--line);background:var(--cream-2)}
+.legal-header .eyebrow{margin-bottom:24px}
+.legal-header h1{font-weight:800;font-size:clamp(36px,5vw,60px);letter-spacing:-.03em;line-height:1.05;margin-bottom:16px}
+.legal-header .meta{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.legal-wrap{max-width:780px;margin:0 auto;padding:64px 28px 100px}
+.legal-wrap h2{font-weight:700;font-size:22px;letter-spacing:-.018em;color:var(--ink);margin:48px 0 14px;padding-top:48px;border-top:1px solid var(--line)}
+.legal-wrap h2:first-child{margin-top:0;padding-top:0;border-top:none}
+.legal-wrap h3{font-weight:600;font-size:17px;color:var(--ink-2);margin:28px 0 10px}
+.legal-wrap p{color:var(--ink-3);font-size:15.5px;line-height:1.7;margin-bottom:14px}
+.legal-wrap ul{color:var(--ink-3);font-size:15.5px;line-height:1.7;padding-left:20px;margin-bottom:14px;display:flex;flex-direction:column;gap:6px}
+.legal-wrap ul li::marker{color:var(--coral)}
+.legal-wrap a{color:var(--coral-2);text-decoration:underline;text-decoration-color:rgba(255,117,68,.3);text-underline-offset:3px}
+.legal-wrap a:hover{color:var(--coral)}
+.highlight-box{background:var(--paper);border:1px solid var(--line-2);border-left:3px solid var(--coral);border-radius:var(--r);padding:20px 22px;margin:20px 0}
+.highlight-box p{margin:0;color:var(--ink-2)}
+footer{background:#070A10;color:var(--ink-3);padding:64px 0 28px;border-top:1px solid var(--line)}
+.foot-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.foot-brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:800;font-size:22px;margin-bottom:18px;letter-spacing:-.02em}
+.foot-brand img{height:32px;width:32px}
+.foot-about{font-size:14px;line-height:1.55;max-width:34ch}
+.foot-col h4{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--coral-2);font-weight:500;margin-bottom:18px}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.foot-col a{font-size:14px;color:var(--ink-3);transition:color .2s}
+.foot-col a:hover{color:var(--coral-2)}
+.foot-bot{border-top:1px solid var(--line);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:12.5px}
+.foot-bot .links{display:flex;gap:20px}
+@media(max-width:880px){.foot-top{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:560px){.foot-top{grid-template-columns:1fr}}
+.float-wa{position:fixed;bottom:22px;right:22px;z-index:60;width:60px;height:60px;border-radius:50%;background:var(--wa);color:#fff;display:grid;place-items:center;box-shadow:0 16px 30px -8px rgba(31,171,84,.5);transition:transform .2s}
+.float-wa:hover{transform:scale(1.06)}
+.float-wa svg{width:30px;height:30px}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/otto-monogram.png" alt="" />
+      OTTO
+    </a>
+    <div class="nav-cta">
+      <a href="index.html#plans" class="btn btn-line" style="padding:9px 16px;font-size:13.5px">Ver planos</a>
+      <a href="https://wa.me/5511963798901?text=Ol%C3%A1%2C+quero+agendar+uma+demonstra%C3%A7%C3%A3o+do+OTTO" target="_blank" rel="noopener" class="btn btn-coral" style="padding:9px 18px;font-size:13.5px">Agendar Demonstração</a>
+    </div>
+  </div>
+</header>
+
+<div class="legal-header">
+  <div class="container">
+    <span class="eyebrow"><span class="dot"></span>Legal</span>
+    <h1 style="margin-top:24px">Termos de Uso</h1>
+    <p class="meta">Última atualização: 19 de maio de 2026</p>
+  </div>
+</div>
+
+<div class="legal-wrap">
+
+  <h2>1. Aceitação dos termos</h2>
+  <p>Ao contratar ou utilizar o OTTO, você ("Contratante" ou "Usuário") concorda com estes Termos de Uso e com nossa <a href="privacidade.html">Política de Privacidade</a>. Se não concordar com alguma condição, não utilize o serviço.</p>
+  <p>Estes Termos regem a relação entre a <strong>Ágape Publicações Ltda.</strong>, CNPJ [CNPJ], com sede em Santo André/SP, e as imobiliárias e corretores que utilizam a plataforma OTTO.</p>
+
+  <h2>2. Descrição do serviço</h2>
+  <p>O OTTO é um agente de inteligência artificial que opera via WhatsApp Business API para:</p>
+  <ul>
+    <li>Atendimento automatizado de leads imobiliários 24 horas por dia</li>
+    <li>Qualificação de perfil de comprador ou locatário</li>
+    <li>Apresentação de imóveis com fotos e informações cadastradas pela imobiliária</li>
+    <li>Transcrição de mensagens de áudio</li>
+    <li>Agendamento, reagendamento e cancelamento de visitas via Google Calendar</li>
+    <li>Transferência da conversa ao corretor responsável no momento adequado</li>
+  </ul>
+  <div class="highlight-box">
+    <p>O OTTO é uma ferramenta de suporte ao trabalho do corretor, não um substituto. Decisões de negócio, negociações e fechamentos são de responsabilidade exclusiva da imobiliária e de seus profissionais.</p>
+  </div>
+
+  <h2>3. Cadastro e acesso</h2>
+  <p>Para utilizar o OTTO, a imobiliária contratante deve fornecer informações verdadeiras e atualizadas no cadastro, incluindo dados da empresa, dos corretores e do catálogo de imóveis. A Ágape Publicações reserva-se o direito de suspender o acesso em caso de informações falsas ou desatualizadas que comprometam a qualidade do serviço.</p>
+
+  <h2>4. Obrigações do contratante</h2>
+  <p>O Contratante compromete-se a:</p>
+  <ul>
+    <li>Manter o cadastro de imóveis atualizado e com informações verídicas</li>
+    <li>Obter as autorizações necessárias dos proprietários para divulgação dos imóveis</li>
+    <li>Informar aos seus leads, de forma clara, que o atendimento inicial é realizado por inteligência artificial</li>
+    <li>Não utilizar o OTTO para fins ilegais, discriminatórios ou que violem direitos de terceiros</li>
+    <li>Manter confidencialidade sobre as credenciais de acesso à plataforma</li>
+    <li>Cumprir as obrigações da LGPD em relação aos dados dos leads atendidos pelo OTTO</li>
+  </ul>
+
+  <h2>5. Uso proibido</h2>
+  <p>É vedado ao Contratante:</p>
+  <ul>
+    <li>Utilizar o OTTO para envio de spam ou mensagens não solicitadas em massa</li>
+    <li>Tentar acessar, modificar ou contornar os sistemas da plataforma</li>
+    <li>Revender, sublicenciar ou ceder o acesso ao OTTO a terceiros sem autorização expressa</li>
+    <li>Utilizar o serviço para fins que violem os termos de uso do WhatsApp Business API da Meta</li>
+    <li>Inserir no catálogo imóveis com informações falsas, fraudulentas ou enganosas</li>
+  </ul>
+
+  <h2>6. Propriedade intelectual</h2>
+  <p>Todo o código, design, marca, conteúdo e tecnologia do OTTO são de propriedade exclusiva da Ágape Publicações Ltda. ou de seus licenciadores. O Contratante recebe apenas uma licença de uso limitada, não exclusiva e intransferível, pelo período de vigência do contrato.</p>
+  <p>Os dados e imóveis inseridos pelo Contratante na plataforma permanecem de sua propriedade. A Ágape Publicações não reivindica direitos sobre esse conteúdo.</p>
+
+  <h2>7. Disponibilidade e SLA</h2>
+  <p>Envidaremos melhores esforços para manter o OTTO disponível 24 horas por dia, 7 dias por semana. Poderão ocorrer interrupções programadas para manutenção, comunicadas com antecedência mínima de 24 horas, bem como interrupções não programadas decorrentes de falhas de terceiros (Meta, Google, provedores de IA), casos fortuitos ou de força maior.</p>
+  <p>Não garantimos tempo de resposta específico por parte dos modelos de IA utilizados, pois estes dependem de provedores externos.</p>
+
+  <h2>8. Limitação de responsabilidade</h2>
+  <p>A Ágape Publicações não se responsabiliza por:</p>
+  <ul>
+    <li>Informações incorretas inseridas pela imobiliária no catálogo de imóveis</li>
+    <li>Leads perdidos por falhas de conectividade do usuário ou do WhatsApp</li>
+    <li>Decisões tomadas por leads com base nas informações fornecidas pelo OTTO</li>
+    <li>Danos indiretos, lucros cessantes ou perda de negócios decorrentes do uso ou impossibilidade de uso do serviço</li>
+  </ul>
+  <p>Em qualquer hipótese, a responsabilidade máxima da Ágape Publicações limita-se ao valor pago pelo Contratante nos últimos 3 meses de serviço.</p>
+
+  <h2>9. Rescisão</h2>
+  <p>Qualquer das partes pode rescindir o contrato mediante aviso prévio de 30 dias. A Ágape Publicações poderá rescindir imediatamente em caso de violação grave destes Termos, uso fraudulento ou inadimplência superior a 30 dias.</p>
+  <p>Após a rescisão, os dados do Contratante serão mantidos pelo prazo legal mínimo e, em seguida, excluídos ou anonimizados, conforme nossa <a href="privacidade.html">Política de Privacidade</a>.</p>
+
+  <h2>10. Alterações nos termos</h2>
+  <p>Reservamo-nos o direito de atualizar estes Termos a qualquer momento. Alterações relevantes serão comunicadas com 15 dias de antecedência por e-mail. O uso continuado do serviço após esse prazo implica a aceitação dos novos termos.</p>
+
+  <h2>11. Lei aplicável e foro</h2>
+  <p>Estes Termos são regidos pelas leis da República Federativa do Brasil. Para dirimir quaisquer controvérsias, fica eleito o foro da comarca de Santo André, Estado de São Paulo, com renúncia a qualquer outro, por mais privilegiado que seja.</p>
+
+  <h2>12. Contato</h2>
+  <div class="highlight-box">
+    <p><strong>Ágape Publicações Ltda.</strong><br>
+    E-mail: <a href="mailto:agi@grupoagape.com.br">agi@grupoagape.com.br</a><br>
+    WhatsApp: <a href="https://wa.me/5511963798901">(11) 96379-8901</a><br>
+    Santo André, SP — Brasil</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="foot-top">
+      <div>
+        <a href="index.html" class="foot-brand"><img src="assets/otto-monogram.png" alt="" /> OTTO</a>
+        <p class="foot-about">O agente de inteligência artificial que atende, qualifica e agenda visitas para imobiliárias 24h por dia, direto no WhatsApp.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Produto</h4>
+        <ul><li><a href="index.html#meet">Quem é o OTTO</a></li><li><a href="index.html#pipeline">Como funciona</a></li><li><a href="index.html#feats">Funcionalidades</a></li><li><a href="index.html#plans">Planos</a></li></ul>
+      </div>
+      <div class="foot-col">
+        <h4>Empresa</h4>
+        <ul><li><a href="https://agapepublicacoes.com.br" target="_blank" rel="noopener">Sobre a Ágape Publicações</a></li></ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contato</h4>
+        <ul><li><a href="https://wa.me/5511963798901" target="_blank" rel="noopener">WhatsApp · (11) 96379-8901</a></li><li><a href="mailto:agi@grupoagape.com.br">agi@grupoagape.com.br</a></li><li><a href="#">Santo André · SP</a></li></ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 Ágape Publicações. Todos os direitos reservados.</span>
+      <div class="links"><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos</a><a href="lgpd.html">LGPD</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/5511963798901?text=Ol%C3%A1%2C+quero+agendar+uma+demonstra%C3%A7%C3%A3o+do+OTTO" target="_blank" rel="noopener" class="float-wa" aria-label="Agendar demonstração no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
+</a>
+
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0B1018" />
+<title>LGPD — OTTO</title>
+<meta name="robots" content="noindex, follow" />
+<link rel="icon" type="image/png" href="assets/otto-monogram.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --cream:#0B1018;--cream-2:#11171F;--paper:#181F2A;--paper-2:#212A37;
+  --ink:#F2EEE5;--ink-2:#E6E1D5;--ink-3:#A8A39A;--muted:#707684;
+  --line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.14);
+  --coral:#FF5A1F;--coral-2:#FF7544;--coral-deep:#C73E0C;
+  --wa:#25D366;--wa-2:#1FAB54;
+  --sans:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --maxw:1280px;--r:12px;--r-lg:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--cream);color:var(--ink);font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--coral);outline-offset:3px}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--coral-2);background:rgba(255,90,31,.14);padding:6px 14px;border-radius:999px;border:1px solid rgba(255,90,31,.22)}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 4px rgba(255,90,31,.18)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 24px;font-weight:600;font-size:15px;border-radius:99px;transition:transform .15s ease,box-shadow .2s ease,background .2s ease,color .2s ease,border-color .2s ease;white-space:nowrap}
+.btn-coral{background:var(--coral);color:#fff;box-shadow:0 1px 0 var(--coral-deep) inset,0 8px 20px -8px rgba(255,90,31,.45)}
+.btn-coral:hover{background:var(--coral-2);transform:translateY(-1px)}
+.btn-line{background:var(--paper);color:var(--ink);border:1px solid var(--line-2)}
+.btn-line:hover{background:var(--paper-2);border-color:var(--coral);color:var(--coral-2)}
+.nav{position:sticky;top:0;z-index:50;background:rgba(11,16,24,.85);backdrop-filter:saturate(140%) blur(12px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:22px}
+.nav-brand img{height:32px;width:32px}
+.nav-cta{display:flex;gap:10px;align-items:center}
+.legal-header{padding:80px 0 60px;border-bottom:1px solid var(--line);background:var(--cream-2)}
+.legal-header .eyebrow{margin-bottom:24px}
+.legal-header h1{font-weight:800;font-size:clamp(36px,5vw,60px);letter-spacing:-.03em;line-height:1.05;margin-bottom:16px}
+.legal-header .meta{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.legal-wrap{max-width:780px;margin:0 auto;padding:64px 28px 100px}
+.legal-wrap h2{font-weight:700;font-size:22px;letter-spacing:-.018em;color:var(--ink);margin:48px 0 14px;padding-top:48px;border-top:1px solid var(--line)}
+.legal-wrap h2:first-child{margin-top:0;padding-top:0;border-top:none}
+.legal-wrap h3{font-weight:600;font-size:17px;color:var(--ink-2);margin:28px 0 10px}
+.legal-wrap p{color:var(--ink-3);font-size:15.5px;line-height:1.7;margin-bottom:14px}
+.legal-wrap ul{color:var(--ink-3);font-size:15.5px;line-height:1.7;padding-left:20px;margin-bottom:14px;display:flex;flex-direction:column;gap:6px}
+.legal-wrap ul li::marker{color:var(--coral)}
+.legal-wrap a{color:var(--coral-2);text-decoration:underline;text-decoration-color:rgba(255,117,68,.3);text-underline-offset:3px}
+.legal-wrap a:hover{color:var(--coral)}
+.highlight-box{background:var(--paper);border:1px solid var(--line-2);border-left:3px solid var(--coral);border-radius:var(--r);padding:20px 22px;margin:20px 0}
+.highlight-box p{margin:0;color:var(--ink-2)}
+.rights-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+.right-card{background:var(--paper);border:1px solid var(--line-2);border-radius:var(--r);padding:18px 20px}
+.right-card strong{display:block;color:var(--ink);font-size:14px;font-weight:700;margin-bottom:6px}
+.right-card span{font-size:13px;color:var(--ink-3);line-height:1.5}
+@media(max-width:600px){.rights-grid{grid-template-columns:1fr}}
+footer{background:#070A10;color:var(--ink-3);padding:64px 0 28px;border-top:1px solid var(--line)}
+.foot-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.foot-brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:800;font-size:22px;margin-bottom:18px;letter-spacing:-.02em}
+.foot-brand img{height:32px;width:32px}
+.foot-about{font-size:14px;line-height:1.55;max-width:34ch}
+.foot-col h4{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--coral-2);font-weight:500;margin-bottom:18px}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.foot-col a{font-size:14px;color:var(--ink-3);transition:color .2s}
+.foot-col a:hover{color:var(--coral-2)}
+.foot-bot{border-top:1px solid var(--line);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:12.5px}
+.foot-bot .links{display:flex;gap:20px}
+@media(max-width:880px){.foot-top{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:560px){.foot-top{grid-template-columns:1fr}}
+.float-wa{position:fixed;bottom:22px;right:22px;z-index:60;width:60px;height:60px;border-radius:50%;background:var(--wa);color:#fff;display:grid;place-items:center;box-shadow:0 16px 30px -8px rgba(31,171,84,.5);transition:transform .2s}
+.float-wa:hover{transform:scale(1.06)}
+.float-wa svg{width:30px;height:30px}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/otto-monogram.png" alt="" />
+      OTTO
+    </a>
+    <div class="nav-cta">
+      <a href="index.html#plans" class="btn btn-line" style="padding:9px 16px;font-size:13.5px">Ver planos</a>
+      <a href="https://wa.me/5511963798901?text=Ol%C3%A1%2C+quero+agendar+uma+demonstra%C3%A7%C3%A3o+do+OTTO" target="_blank" rel="noopener" class="btn btn-coral" style="padding:9px 18px;font-size:13.5px">Agendar Demonstração</a>
+    </div>
+  </div>
+</header>
+
+<div class="legal-header">
+  <div class="container">
+    <span class="eyebrow"><span class="dot"></span>Lei 13.709/2018</span>
+    <h1 style="margin-top:24px">Conformidade com a LGPD</h1>
+    <p class="meta">Última atualização: 19 de maio de 2026</p>
+  </div>
+</div>
+
+<div class="legal-wrap">
+
+  <h2>O nosso compromisso com a LGPD</h2>
+  <p>A Ágape Publicações Ltda. trata os dados pessoais dos usuários do OTTO em conformidade com a Lei Geral de Proteção de Dados (Lei n.º 13.709/2018 — LGPD). Este aviso descreve como cumprimos os princípios da lei e como você pode exercer seus direitos como titular de dados.</p>
+  <div class="highlight-box">
+    <p>O OTTO solicita consentimento explícito antes de qualquer coleta de dado pessoal e registra o aceite com timestamp e identificador único. Todos os dados ficam isolados por imobiliária (Row Level Security) e cada operação é auditável.</p>
+  </div>
+
+  <h2>Quem é o controlador?</h2>
+  <p>O <strong>controlador</strong> dos dados pessoais coletados pela plataforma OTTO é:</p>
+  <div class="highlight-box">
+    <p><strong>Ágape Publicações Ltda.</strong><br>
+    CNPJ: [CNPJ]<br>
+    Santo André, SP — Brasil<br>
+    E-mail: <a href="mailto:agi@grupoagape.com.br">agi@grupoagape.com.br</a></p>
+  </div>
+  <p>As imobiliárias contratantes atuam como <strong>operadoras</strong> em relação aos dados dos seus leads, sendo responsáveis por obter o consentimento adequado dos titulares para o atendimento via OTTO.</p>
+
+  <h2>Bases legais utilizadas</h2>
+  <p>O tratamento de dados pessoais no OTTO fundamenta-se nas seguintes hipóteses do art. 7º da LGPD:</p>
+  <ul>
+    <li><strong>Consentimento (art. 7º, I)</strong> — transcrição de áudios e envio de comunicações opcionais. O consentimento pode ser revogado a qualquer momento.</li>
+    <li><strong>Execução de contrato (art. 7º, V)</strong> — atendimento ao lead, qualificação, envio de informações sobre imóveis e agendamento de visitas.</li>
+    <li><strong>Legítimo interesse (art. 7º, IX)</strong> — melhoria contínua dos modelos e da qualidade do atendimento, mediante análise anonimizada de conversas.</li>
+    <li><strong>Cumprimento de obrigação legal (art. 7º, II)</strong> — manutenção de registros fiscais, contábeis e regulatórios.</li>
+  </ul>
+
+  <h2>Dados tratados e finalidades</h2>
+  <p>O quadro abaixo apresenta os principais dados tratados e suas respectivas finalidades:</p>
+  <ul>
+    <li><strong>Nome e telefone</strong> — identificação do lead e comunicação via WhatsApp</li>
+    <li><strong>Preferências de imóvel</strong> — qualificação de perfil e apresentação de imóveis adequados</li>
+    <li><strong>Histórico de conversa</strong> — continuidade do atendimento e transferência ao corretor</li>
+    <li><strong>Áudio transcrito</strong> — compreensão da solicitação do lead (somente com consentimento)</li>
+    <li><strong>Data e horário de visita</strong> — agendamento no Google Calendar e confirmação ao lead e ao corretor</li>
+    <li><strong>Dados de acesso da imobiliária</strong> — autenticação e gestão da conta contratante</li>
+  </ul>
+
+  <h2>Seus direitos como titular (art. 18 da LGPD)</h2>
+  <p>Você tem os seguintes direitos, que podem ser exercidos a qualquer momento:</p>
+  <div class="rights-grid">
+    <div class="right-card">
+      <strong>Confirmação e acesso</strong>
+      <span>Saber se tratamos seus dados e obter uma cópia deles.</span>
+    </div>
+    <div class="right-card">
+      <strong>Correção</strong>
+      <span>Corrigir dados incompletos, inexatos ou desatualizados.</span>
+    </div>
+    <div class="right-card">
+      <strong>Anonimização ou eliminação</strong>
+      <span>Solicitar a anonimização ou exclusão de dados desnecessários ou tratados em desconformidade.</span>
+    </div>
+    <div class="right-card">
+      <strong>Portabilidade</strong>
+      <span>Receber seus dados em formato estruturado para transferência a outro fornecedor.</span>
+    </div>
+    <div class="right-card">
+      <strong>Revogação do consentimento</strong>
+      <span>Retirar seu consentimento a qualquer momento, sem prejuízo das operações já realizadas.</span>
+    </div>
+    <div class="right-card">
+      <strong>Oposição</strong>
+      <span>Opor-se ao tratamento realizado com base em legítimo interesse, se houver razão legítima.</span>
+    </div>
+    <div class="right-card">
+      <strong>Informação sobre compartilhamento</strong>
+      <span>Saber com quais entidades seus dados foram compartilhados.</span>
+    </div>
+    <div class="right-card">
+      <strong>Revisão de decisão automatizada</strong>
+      <span>Solicitar revisão humana de decisões tomadas exclusivamente por sistemas automatizados.</span>
+    </div>
+  </div>
+
+  <h2>Como exercer seus direitos</h2>
+  <p>Para exercer qualquer um dos direitos acima, envie uma solicitação para <a href="mailto:agi@grupoagape.com.br">agi@grupoagape.com.br</a> com o assunto <strong>"Direitos LGPD"</strong>, informando:</p>
+  <ul>
+    <li>Seu nome completo</li>
+    <li>Número de telefone utilizado no WhatsApp</li>
+    <li>Descrição do direito que deseja exercer</li>
+  </ul>
+  <p>Responderemos em até <strong>15 dias úteis</strong>, conforme previsto na LGPD.</p>
+
+  <h2>Segurança e medidas técnicas</h2>
+  <p>Adotamos as seguintes medidas de segurança para proteger seus dados:</p>
+  <ul>
+    <li>Isolamento de dados por imobiliária via Row Level Security (RLS) no banco de dados</li>
+    <li>Autenticação via tokens seguros com expiração programada</li>
+    <li>Comunicação criptografada (HTTPS/TLS) em todos os endpoints</li>
+    <li>Registros de auditoria para todas as operações de acesso e modificação de dados</li>
+    <li>Acesso restrito por chave secreta interna entre os serviços da plataforma</li>
+    <li>Armazenamento de fotos e arquivos em bucket privado com acesso controlado</li>
+  </ul>
+
+  <h2>Retenção e eliminação</h2>
+  <p>Os dados pessoais dos leads são mantidos pelo período necessário à prestação do serviço. Após o encerramento do contrato com a imobiliária, os dados são eliminados ou anonimizados em até <strong>90 dias</strong>, salvo obrigação legal de retenção mais longa (ex.: registros fiscais, que obedecem ao prazo de 5 anos).</p>
+
+  <h2>Transferência internacional de dados</h2>
+  <p>A plataforma OTTO utiliza o serviço de inteligência artificial da OpenAI (EUA) para processamento de linguagem natural. Essa transferência internacional de dados é realizada com base em cláusulas contratuais padrão e salvaguardas adequadas, conforme art. 33 da LGPD. Os dados enviados à OpenAI são limitados ao conteúdo necessário para gerar a resposta ao lead, sem identificadores desnecessários.</p>
+
+  <h2>Encarregado de Dados (DPO)</h2>
+  <div class="highlight-box">
+    <p><strong>Encarregado de Proteção de Dados (DPO)</strong><br>
+    Nome: [Nome do DPO]<br>
+    E-mail: <a href="mailto:agi@grupoagape.com.br">agi@grupoagape.com.br</a><br>
+    <br>
+    Você também pode registrar reclamações perante a Autoridade Nacional de Proteção de Dados (ANPD) em <a href="https://www.gov.br/anpd" target="_blank" rel="noopener">www.gov.br/anpd</a>.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="foot-top">
+      <div>
+        <a href="index.html" class="foot-brand"><img src="assets/otto-monogram.png" alt="" /> OTTO</a>
+        <p class="foot-about">O agente de inteligência artificial que atende, qualifica e agenda visitas para imobiliárias 24h por dia, direto no WhatsApp.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Produto</h4>
+        <ul><li><a href="index.html#meet">Quem é o OTTO</a></li><li><a href="index.html#pipeline">Como funciona</a></li><li><a href="index.html#feats">Funcionalidades</a></li><li><a href="index.html#plans">Planos</a></li></ul>
+      </div>
+      <div class="foot-col">
+        <h4>Empresa</h4>
+        <ul><li><a href="https://agapepublicacoes.com.br" target="_blank" rel="noopener">Sobre a Ágape Publicações</a></li></ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contato</h4>
+        <ul><li><a href="https://wa.me/5511963798901" target="_blank" rel="noopener">WhatsApp · (11) 96379-8901</a></li><li><a href="mailto:agi@grupoagape.com.br">agi@grupoagape.com.br</a></li><li><a href="#">Santo André · SP</a></li></ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 Ágape Publicações. Todos os direitos reservados.</span>
+      <div class="links"><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos</a><a href="lgpd.html">LGPD</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/5511963798901?text=Ol%C3%A1%2C+quero+agendar+uma+demonstra%C3%A7%C3%A3o+do+OTTO" target="_blank" rel="noopener" class="float-wa" aria-label="Agendar demonstração no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
+</a>
+
+</body>
+</html>

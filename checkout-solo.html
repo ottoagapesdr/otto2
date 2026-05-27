@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Checkout | OTTO Solo</title>
+<link rel="icon" type="image/png" href="assets/otto-monogram.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --cream:#0B1018;--cream-2:#11171F;--paper:#181F2A;--paper-2:#212A37;
+  --ink:#F2EEE5;--ink-2:#E6E1D5;--ink-3:#A8A39A;--muted:#707684;
+  --line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.14);
+  --coral:#FF5A1F;--coral-2:#FF7544;--coral-deep:#C73E0C;
+  --leaf:#1F7A4D;--yellow:#F5C24A;
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --r:12px;--r-lg:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;font-size:15px}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+img{max-width:100%;display:block}
+.shell{width:min(100% - 40px,1200px);margin:0 auto;padding:32px 0 60px}
+
+/* TOPBAR */
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:44px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:18px;letter-spacing:-.02em}
+.brand img{height:36px;width:36px}
+.secure{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-3);border:1px solid var(--line-2);background:rgba(255,255,255,.04);padding:8px 14px;border-radius:999px}
+.secure-dot{width:7px;height:7px;border-radius:50%;background:var(--leaf);box-shadow:0 0 10px var(--leaf)}
+
+/* GRID */
+.co-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+
+/* CARDS */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;margin-bottom:16px;position:relative;overflow:hidden}
+.card:last-child{margin-bottom:0}
+.card-title{font-weight:700;font-size:17px;color:#eef0f7;margin-bottom:6px}
+.card-sub{color:var(--ink-3);font-size:13.5px;line-height:1.6;margin-bottom:20px}
+
+/* HERO */
+.hero-card::after{content:"";position:absolute;inset:auto -60px -100px auto;width:280px;height:280px;background:radial-gradient(circle,rgba(255,90,31,.18),transparent 65%);pointer-events:none}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--coral-2);background:rgba(255,90,31,.12);padding:5px 12px;border-radius:999px;border:1px solid rgba(255,90,31,.22);margin-bottom:16px}
+.eyebrow::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--coral);box-shadow:0 0 8px var(--coral)}
+.hero-card h1{font-weight:800;font-size:clamp(28px,3.4vw,44px);letter-spacing:-.03em;line-height:1.04;color:#f0f3fb;margin-bottom:14px}
+.hero-card h1 em{color:var(--coral-2);font-style:normal}
+.hero-card p{color:var(--ink-3);font-size:14.5px;line-height:1.7;max-width:54ch}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:24px}
+.kpi{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:var(--r);padding:16px;text-align:center}
+.kpi strong{display:block;font-size:32px;font-weight:800;color:var(--coral-2);letter-spacing:-.03em;line-height:1;margin-bottom:6px}
+.kpi span{font-size:12px;color:var(--ink-3);line-height:1.4}
+
+/* PLAN SELECTOR */
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.plan-opt{border:2px solid var(--line);border-radius:var(--r);padding:16px;cursor:pointer;transition:border-color .2s,background .2s;position:relative}
+.plan-opt:hover{border-color:var(--line-2)}
+.plan-opt.selected{border-color:var(--coral);background:rgba(255,90,31,.06)}
+.plan-opt.featured-plan{border-color:rgba(255,90,31,.35)}
+.plan-badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--coral);color:#fff;font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.plan-opt .pname{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--coral-2);font-weight:600;margin-bottom:4px}
+.plan-opt .ptier{font-weight:800;font-size:20px;color:#fff;line-height:1;margin-bottom:8px}
+.plan-opt .pprice{font-size:12.5px;color:var(--ink-3)}
+.plan-opt .pprice strong{color:var(--ink);font-size:14px}
+.plan-radio{position:absolute;top:10px;right:10px;width:16px;height:16px;border-radius:50%;border:2px solid var(--line-2);transition:all .2s;background:transparent}
+.plan-opt.selected .plan-radio{background:var(--coral);border-color:var(--coral);box-shadow:0 0 0 3px rgba(255,90,31,.2)}
+.plan-opt.selected .plan-radio::after{content:"";display:block;width:4px;height:7px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg) translate(1px,0)}
+
+/* BILLING */
+.billing-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.billing-opt{border:2px solid var(--line);border-radius:var(--r);padding:18px;cursor:pointer;transition:all .2s;position:relative}
+.billing-opt:hover{border-color:var(--line-2)}
+.billing-opt.selected{border-color:var(--coral);background:rgba(255,90,31,.06);box-shadow:0 12px 32px rgba(255,90,31,.1)}
+.billing-opt .bname{font-weight:700;color:#fff;font-size:15px;margin-bottom:2px}
+.billing-opt .bpill{display:inline-block;font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--yellow);border:1px solid rgba(255,196,74,.3);border-radius:99px;padding:2px 7px;margin-left:6px}
+.billing-opt .bprice{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.02em;margin:8px 0 4px}
+.billing-opt .bprice small{font-size:12px;color:var(--ink-3);font-weight:500}
+.billing-opt .bdesc{font-size:12.5px;color:var(--ink-3);line-height:1.45}
+
+/* ORDER BUMPS */
+.bump-header{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+.bump-icon-wrap{width:40px;height:40px;border-radius:10px;background:rgba(255,90,31,.12);color:var(--coral-2);display:grid;place-items:center;flex:0 0 40px;font-weight:800;font-size:18px}
+.bump-title{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.bump-desc{color:var(--ink-3);font-size:13px;line-height:1.5}
+.bump-products{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.bump-prod{display:flex;gap:14px;align-items:flex-start;border:2px solid var(--line);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:all .2s;position:relative;background:rgba(255,255,255,.02)}
+.bump-prod:hover{border-color:var(--line-2)}
+.bump-prod.selected{border-color:var(--coral);background:rgba(255,90,31,.05)}
+.bump-prod.featured-bump{border-color:rgba(255,196,74,.25)}
+.bump-featured-tag{position:absolute;top:-8px;left:14px;background:var(--yellow);color:#000;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;padding:2px 9px;border-radius:99px}
+.bump-prod-icon{width:36px;height:36px;border-radius:8px;background:var(--paper-2);border:1px solid var(--line);display:grid;place-items:center;flex:0 0 36px;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--coral-2)}
+.bump-prod-info{flex:1;min-width:0}
+.bump-prod-info strong{display:block;color:#fff;font-size:14px;font-weight:700;margin-bottom:2px}
+.bump-prod-info .btype{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--coral-2);font-weight:600;display:block;margin-bottom:4px}
+.bump-prod-info p{font-size:12.5px;color:var(--ink-3);line-height:1.45;margin-bottom:6px}
+.bump-prod-pricing{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bump-prod-pricing del{font-size:12px;color:var(--muted);text-decoration:line-through}
+.bump-prod-pricing .bprice-val{font-weight:800;font-size:14px;color:var(--coral-2)}
+.bump-prod-pricing .bdiscount{font-size:10px;background:rgba(255,90,31,.15);color:var(--coral-2);padding:2px 6px;border-radius:99px;border:1px solid rgba(255,90,31,.25);font-weight:700}
+.bump-check-box{width:18px;height:18px;border-radius:4px;border:2px solid var(--line-2);flex:0 0 18px;display:grid;place-items:center;transition:all .2s;margin-top:2px}
+.bump-prod.selected .bump-check-box{background:var(--coral);border-color:var(--coral)}
+.bump-prod.selected .bump-check-box::after{content:"";display:block;width:4px;height:8px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg) translate(0,-1px)}
+.bump-note{margin-top:12px;font-size:12px;color:var(--muted);padding:10px 12px;background:rgba(255,255,255,.03);border-radius:var(--r);border:1px solid var(--line)}
+
+/* BUMP RADIO (Business) */
+.bump-radio-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.bump-radio-opt input[type=radio]{display:none}
+.bump-radio-lbl{display:flex;align-items:center;gap:12px;border:2px solid var(--line);border-radius:var(--r);padding:14px;cursor:pointer;transition:all .2s}
+.bump-radio-lbl:hover{border-color:var(--line-2)}
+.bump-radio-opt input:checked+.bump-radio-lbl{border-color:var(--coral);background:rgba(255,90,31,.06)}
+.bump-radio-lbl strong{display:block;font-size:13px;font-weight:700;color:#fff}
+.bump-radio-lbl small{font-size:11.5px;color:var(--ink-3);line-height:1.35}
+
+/* QTY */
+.qty-row{display:flex;align-items:center;gap:14px;margin:14px 0}
+.qty-label{font-size:13px;color:var(--ink-3)}
+.qty-wrap{display:flex;align-items:center;border:1px solid var(--line-2);border-radius:8px;overflow:hidden}
+.qty-btn{background:var(--paper-2);border:none;color:var(--ink);font-size:17px;font-weight:700;width:34px;height:34px;cursor:pointer;transition:background .15s}
+.qty-btn:hover{background:rgba(255,90,31,.15);color:var(--coral)}
+.qty-val{width:48px;height:34px;text-align:center;font-size:14px;font-weight:700;color:var(--ink);background:var(--paper);border:none;border-left:1px solid var(--line-2);border-right:1px solid var(--line-2);outline:none}
+
+/* UPSELL */
+.upsell-card{border-color:rgba(255,90,31,.22)!important;background:linear-gradient(135deg,rgba(255,90,31,.07),transparent 60%)!important;display:none}
+.upsell-card.visible{display:block}
+.upsell-inner{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.upsell-tag{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral-2);margin-bottom:4px}
+.upsell-main-title{font-weight:800;font-size:15px;color:#fff;margin-bottom:4px}
+.upsell-main-desc{font-size:12.5px;color:var(--ink-3);line-height:1.5;max-width:40ch}
+.upsell-price-block{text-align:right;flex:0 0 auto}
+.upsell-price-big{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.upsell-price-big small{font-size:12px;font-weight:500;color:var(--ink-3)}
+.upsell-price-note{font-size:11px;color:var(--muted);margin-top:2px}
+.upsell-check-row{margin-top:14px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink)}
+.upsell-check-row input[type=checkbox]{width:17px;height:17px;accent-color:var(--coral);cursor:pointer}
+
+/* SUMMARY */
+.summary-card{position:sticky;top:20px}
+.summary-plan-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.summary-plan-head h2{font-weight:800;font-size:26px;letter-spacing:-.025em;color:#f0f3fb;line-height:1}
+.summary-plan-head h2 small{display:block;font-size:13px;color:var(--ink-3);font-weight:500;letter-spacing:0;margin-top:4px}
+.status-pill{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--leaf);border:1px solid rgba(31,122,77,.3);border-radius:99px;padding:5px 9px;font-weight:700;white-space:nowrap}
+.status-pill::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--leaf);box-shadow:0 0 8px var(--leaf)}
+.summary-rows{display:flex;flex-direction:column;gap:0;margin-bottom:16px}
+.s-row{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.s-row:last-child{border-bottom:none}
+.s-row .sl{color:var(--ink-3);line-height:1.4}
+.s-row .sv{font-weight:600;color:var(--ink);text-align:right;white-space:nowrap}
+.s-row.note-row .sl{font-size:12px;color:var(--muted);font-style:italic}
+.s-row.note-row .sv{font-size:12px;color:var(--muted)}
+
+/* TOTAL */
+.total-block{background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:0}
+.total-label{font-size:11px;font-family:var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:12px}
+.total-row{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:8px;font-size:13.5px}
+.total-row:last-child{margin-bottom:0}
+.total-row .tl{color:var(--ink-3)}
+.total-row .tv{font-weight:700;font-size:15px;color:var(--coral-2);font-family:var(--mono);text-align:right}
+.total-row .tv small{font-size:11px;color:var(--muted);font-weight:500;font-family:var(--sans);display:block;text-align:right;margin-top:2px}
+
+/* PAY BLOCKS */
+.pay-block{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.pay-block-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pay-block-title .ptag{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral-2);background:rgba(255,90,31,.12);padding:2px 7px;border-radius:99px;border:1px solid rgba(255,90,31,.2)}
+.pay-block-note{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+.pay-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0}
+.btn-pay{display:flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:var(--r);font-weight:700;font-size:13.5px;transition:all .2s;cursor:pointer;text-align:center;border:none}
+.btn-coral{background:var(--coral);color:#fff;box-shadow:0 6px 20px rgba(255,90,31,.35)}
+.btn-coral:hover{background:var(--coral-2);transform:translateY(-1px)}
+.btn-outline{background:rgba(255,255,255,.05);color:var(--ink);border:1px solid var(--line-2)}
+.btn-outline:hover{border-color:var(--coral);color:var(--coral-2);transform:translateY(-1px)}
+
+/* TRUST */
+.trust-bar{display:flex;flex-wrap:wrap;gap:10px 20px;padding:14px 0 0;border-top:1px solid var(--line);margin-top:16px}
+.trust-item{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted)}
+.trust-item svg{width:13px;height:13px;color:var(--leaf)}
+
+.footnote{text-align:center;margin-top:32px;font-size:12px;color:var(--muted)}
+.footnote a{color:var(--ink-3)}
+
+@media(max-width:980px){.co-grid{grid-template-columns:1fr}.summary-card{position:relative;top:auto}}
+@media(max-width:680px){.plan-grid{grid-template-columns:1fr}.billing-grid{grid-template-columns:1fr}.pay-btns{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.topbar{flex-direction:column;align-items:flex-start;margin-bottom:28px}.bump-radio-grid{grid-template-columns:1fr}}
+@media(max-width:460px){.kpis{grid-template-columns:1fr}}
+
+/* BÔNUS SITE + MANUTENÇÃO */
+.site-bonus-card{
+  margin-top:14px;display:none;
+  border:1px solid rgba(245,194,74,.3);
+  background:linear-gradient(135deg,rgba(245,194,74,.06),transparent 60%);
+  border-radius:var(--r-lg);padding:20px 22px;
+  animation:bonus-appear .4s ease;
+}
+.site-bonus-card.visible{display:block}
+.site-bonus-tag{
+  font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--yellow);margin-bottom:8px;display:block;
+}
+.site-bonus-title{font-size:15px;font-weight:800;color:#fff;margin-bottom:10px}
+.site-bonus-items{display:flex;flex-direction:column;gap:8px}
+.site-bonus-item{
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;color:var(--ink-3);
+}
+.site-bonus-item::before{
+  content:"✓";width:20px;height:20px;border-radius:50%;
+  background:rgba(245,194,74,.15);border:1px solid rgba(245,194,74,.3);
+  color:var(--yellow);font-size:11px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  flex:0 0 20px;
+}
+.site-bonus-item strong{color:#fff}
+.site-bonus-savings{
+  margin-top:12px;padding-top:12px;border-top:1px solid rgba(245,194,74,.15);
+  font-size:12px;color:var(--muted);
+}
+.site-bonus-savings strong{color:var(--yellow)}
+
+
+/* BADGES ANUAIS */
+.bpill-discount{
+  background:rgba(255,90,31,.25);color:var(--coral-2);
+  border-color:rgba(255,90,31,.4);font-size:10px;
+}
+.billing-opt.selected .bpill-discount{
+  background:var(--coral);color:#fff;border-color:var(--coral);
+}
+.annual-bonus-badge{
+  display:none;margin-top:10px;
+  font-size:11px;font-weight:700;letter-spacing:.06em;
+  color:var(--yellow);
+  padding:6px 10px;border-radius:8px;
+  background:rgba(245,194,74,.1);border:1px solid rgba(245,194,74,.25);
+  text-align:center;
+}
+.billing-opt.selected .annual-bonus-badge{display:block}
+
+
+/* BÔNUS ANUAL SOLO */
+.bonus-wrap{margin-top:14px;display:none}
+.bonus-wrap.visible{display:block}
+.btn-bonus{
+  width:100%;padding:16px 24px;
+  border-radius:var(--r);
+  border:2px solid var(--coral);
+  background:var(--paper);
+  color:var(--coral-2);
+  font-weight:800;font-size:15px;letter-spacing:-.01em;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  cursor:pointer;font-family:var(--sans);
+  animation:glow-pulse 2.2s ease-in-out infinite;
+  transition:opacity .2s;
+}
+@keyframes glow-pulse{
+  0%,100%{box-shadow:0 0 20px -6px rgba(255,90,31,.4)}
+  50%{box-shadow:0 0 36px -2px rgba(255,90,31,.7)}
+}
+.btn-bonus:disabled{animation:none;opacity:.5;cursor:default}
+.btn-bonus .bonus-icon{font-size:18px;line-height:1}
+.bonus-success{
+  display:none;align-items:center;gap:12px;
+  background:rgba(31,122,77,.12);border:1px solid rgba(31,122,77,.3);
+  border-radius:var(--r);padding:14px 18px;
+  animation:bonus-appear2 .35s ease;
+}
+.bonus-success.visible{display:flex}
+@keyframes bonus-appear2{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.bonus-success-icon{font-size:22px;line-height:1}
+.bonus-success-text strong{display:block;font-size:14px;font-weight:800;color:var(--leaf);margin-bottom:2px}
+.bonus-success-text span{font-size:12px;color:var(--ink-3);line-height:1.45}
+
+
+/* BÔNUS DENTRO DO CARD MANUTENÇÃO */
+.upsell-bonus-strip{
+  margin-top:14px;padding:12px 14px;
+  border-radius:var(--r);
+  background:rgba(245,194,74,.08);
+  border:1px solid rgba(245,194,74,.25);
+  display:flex;flex-direction:column;gap:7px;
+}
+.upsell-bonus-strip-title{
+  font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--yellow);margin-bottom:2px;
+}
+.upsell-bonus-pill{
+  display:flex;align-items:center;gap:8px;
+  font-size:12.5px;color:var(--ink-3);
+}
+.upsell-bonus-pill::before{
+  content:"✓";width:18px;height:18px;border-radius:50%;flex:0 0 18px;
+  background:rgba(245,194,74,.15);border:1px solid rgba(245,194,74,.3);
+  color:var(--yellow);font-size:10px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+.upsell-bonus-pill strong{color:#fff}
+.upsell-bonus-extra{
+  display:none;margin-top:6px;padding:8px 12px;
+  background:rgba(31,122,77,.12);border:1px solid rgba(31,122,77,.25);
+  border-radius:8px;font-size:12px;color:var(--leaf);font-weight:700;
+  text-align:center;
+}
+.upsell-bonus-extra.visible{display:block}
+
+
+/* BÔNUS RESGATADOS NO RESUMO */
+.bonus-obtained{
+  display:none;margin-top:14px;
+  border:1px solid rgba(31,122,77,.3);
+  background:rgba(31,122,77,.07);
+  border-radius:var(--r);padding:14px 16px;
+  animation:bonus-appear2 .35s ease;
+}
+.bonus-obtained.visible{display:block}
+.bonus-obtained-title{
+  font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--leaf);margin-bottom:10px;display:flex;align-items:center;gap:6px;
+}
+.bonus-obtained-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:var(--ink-3);padding:4px 0;
+}
+.bonus-obtained-item::before{
+  content:"✓";color:var(--leaf);font-weight:800;font-size:12px;
+}
+.bonus-obtained-item strong{color:#fff}
+/* Preço riscado manutenção */
+.manut-price-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.manut-was{font-size:12px;color:var(--muted);text-decoration:line-through;display:none}
+.manut-was.visible{display:block}
+.manut-now{font-size:16px;font-weight:800;letter-spacing:-.02em}
+.manut-now.discounted{color:#22c55e}
+
+</style>
+</head>
+<body>
+<main class="shell">
+
+  <header class="topbar">
+    <a href="index2.html" class="brand">
+      <img src="assets/otto-monogram.png" alt="OTTO"/> OTTO Solo
+    </a>
+    <div class="secure"><span class="secure-dot"></span>Pagamento seguro &middot; Mercado Pago</div>
+  </header>
+
+  <div class="co-grid">
+    <div>
+
+      <article class="card hero-card">
+        <div class="eyebrow">OTTO Solo &middot; Para corretores aut&ocirc;nomos</div>
+        <h1>Ative seu assistente<br>de vendas no <em>WhatsApp</em></h1>
+        <p>O primeiro passo &eacute; o setup de implanta&ccedil;&atilde;o. A assinatura come&ccedil;a somente ap&oacute;s configura&ccedil;&atilde;o, testes e valida&ccedil;&atilde;o &mdash; em at&eacute; 11 dias &uacute;teis.</p>
+        <div class="kpis">
+          <div class="kpi"><strong>24/7</strong><span>Atendimento no WhatsApp sem parar</span></div>
+          <div class="kpi"><strong>&lt;3s</strong><span>Tempo m&eacute;dio de resposta ao lead</span></div>
+          <div class="kpi"><strong>11</strong><span>dias &uacute;teis para implanta&ccedil;&atilde;o</span></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-title">Escolha o seu plano</div>
+        <p class="card-sub">Selecione o plano OTTO Solo que mais combina com o seu momento.</p>
+        <div class="plan-grid">
+          <div class="plan-opt" data-plan="start" onclick="selectPlan('start')">
+            <div class="plan-radio"></div>
+            <div class="pname">OTTO Solo</div><div class="ptier">Start</div>
+            <div class="pprice">a partir de <strong>R$187</strong>/m&ecirc;s</div>
+          </div>
+          <div class="plan-opt featured-plan selected" data-plan="pro" onclick="selectPlan('pro')">
+            <div class="plan-badge">Mais escolhido</div>
+            <div class="plan-radio"></div>
+            <div class="pname">OTTO Solo</div><div class="ptier">Pro</div>
+            <div class="pprice">a partir de <strong>R$297</strong>/m&ecirc;s</div>
+          </div>
+          <div class="plan-opt" data-plan="black" onclick="selectPlan('black')">
+            <div class="plan-radio"></div>
+            <div class="pname">OTTO Solo</div><div class="ptier">Black</div>
+            <div class="pprice">a partir de <strong>R$447</strong>/m&ecirc;s</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-title">Formato de contrata&ccedil;&atilde;o</div>
+        <p class="card-sub">No plano anual o setup j&aacute; est&aacute; incluso e voc&ecirc; economiza na assinatura.</p>
+        <div class="billing-grid">
+          <div class="billing-opt selected" data-billing="m" onclick="selectBilling('m')">
+            <div class="bname">Mensal</div>
+            <div class="bprice" id="price-m">R$297<small>/m&ecirc;s</small></div>
+            <div class="bdesc">A assinatura mensal come&ccedil;a ap&oacute;s a entrega do OTTO. Setup pago agora.</div>
+          </div>
+          <div class="billing-opt" data-billing="a" onclick="selectBilling('a')">
+            <div class="bname">Anual</div>
+            <div class="bprice" id="price-a">R$240<small>/m&ecirc;s</small></div>
+            <div class="bdesc">Assinatura anual com 20% de desconto. Setup cobrado separadamente.</div>
+            <div class="annual-bonus-badge">&#127873; DESCONTO DE 20% + B&Ocirc;NUS EXCLUSIVO neste plano!</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" style="border-color:rgba(255,90,31,.22);background:linear-gradient(135deg,rgba(255,90,31,.06),transparent 55%)">
+        <div class="bump-header">
+          <div class="bump-icon-wrap">+</div>
+          <div>
+            <div class="bump-title">Turbine sua presen&ccedil;a digital</div>
+            <div class="bump-desc">Adicione produtos &Aacute;gape com desconto exclusivo. Os selecionados s&atilde;o inclu&iacute;dos automaticamente no total de pagamento.</div>
+          </div>
+        </div>
+        <div class="bump-products">
+
+          <div class="bump-prod featured-bump" data-bump="pralink" onclick="toggleBump('pralink')">
+            <div class="bump-featured-tag">Mais popular</div>
+            <div class="bump-check-box"></div>
+            <div class="bump-prod-icon">PL</div>
+            <div class="bump-prod-info">
+              <strong>PraLink</strong>
+              <span class="btype">Gestor de links profissional</span>
+              <p>Um link &uacute;nico que centraliza seus contatos, portais e WhatsApp. Transforme sua bio em uma central de convers&otilde;es.</p>
+              <div class="bump-prod-pricing">
+                <del>12&times; R$67</del>
+                <span class="bprice-val">12&times; R$37</span>
+                <span class="bdiscount">44% OFF</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bump-prod featured-bump" data-bump="website" onclick="toggleBump('website')">
+            <div class="bump-featured-tag">Mais completo</div>
+            <div class="bump-check-box"></div>
+            <div class="bump-prod-icon">WS</div>
+            <div class="bump-prod-info">
+              <strong>Site de Corretor</strong>
+              <span class="btype">Identidade digital completa</span>
+              <p>Site completo e personalizado com apresenta&ccedil;&atilde;o, cat&aacute;logo de im&oacute;veis e formul&aacute;rio de contato. Design exclusivo para corretores.</p>
+              <div class="bump-prod-pricing">
+                <del>R$950</del>
+                <span class="bprice-val">12&times; R$55</span>
+                <span class="bdiscount">30% OFF</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="bump-note">Cada produto selecionado &eacute; automaticamente inclu&iacute;do no valor dos bot&otilde;es de pagamento abaixo.</div>
+      </article>
+
+      <article class="card upsell-card" id="upsell-section">
+        <div class="upsell-tag">Oferta exclusiva ao adicionar o Site de Corretor</div>
+        <div class="upsell-inner">
+          <div>
+            <div class="upsell-main-title">Manuten&ccedil;&atilde;o Anual &mdash; Seu site sempre atualizado</div>
+            <div class="upsell-main-desc">Inclui hospedagem, atualiza&ccedil;&otilde;es de conte&uacute;do e manuten&ccedil;&atilde;o t&eacute;cnica durante 12 meses. A cobran&ccedil;a inicia ap&oacute;s a publica&ccedil;&atilde;o do site. Dom&iacute;nio registrado &agrave; parte.</div>
+          </div>
+          <div class="upsell-price-block">
+            <div class="manut-price-wrap">
+              <div class="manut-was" id="manut-was">12&times; R$57/m&ecirc;s</div>
+              <div class="manut-now" id="manut-now">R$57<small>/m&ecirc;s</small></div>
+            </div>
+            <div class="upsell-price-note" id="manut-note">Contrato anual &middot; R$684/ano</div>
+          </div>
+        </div>
+        <label class="upsell-check-row">
+          <input type="checkbox" id="chk-manutencao" onchange="toggleUpsell()"/>
+          Sim, quero a manuten&ccedil;&atilde;o anual do site
+        </label>
+
+        <!-- Bônus da manutenção -->
+        <div class="upsell-bonus-strip">
+          <div class="upsell-bonus-strip-title">&#127873; Ao contratar, voc&ecirc; ganha</div>
+          <div class="upsell-bonus-pill"><strong>3 meses gr&aacute;tis</strong>&nbsp;de manuten&ccedil;&atilde;o (R$171 de economia)</div>
+          <div class="upsell-bonus-pill"><strong>1 PraLink</strong>&nbsp;incluso &mdash; gestor de links profissional</div>
+          <div class="upsell-bonus-extra" id="upsell-black-bonus">
+            &#9989; Plano Black Anual: Setup de implanta&ccedil;&atilde;o tamb&eacute;m gratuito!
+          </div>
+        </div>
+      </article>
+
+      <!-- BÔNUS: Site + Manutenção → 3 meses grátis + PraLink -->
+      <article class="site-bonus-card" id="site-bonus-card">
+        <span class="site-bonus-tag">&#127873; B&ocirc;nus exclusivo desbloqueado</span>
+        <div class="site-bonus-title">Voc&ecirc; ganhou presentes especiais!</div>
+        <div class="site-bonus-items">
+          <div class="site-bonus-item"><strong>3 meses gr&aacute;tis</strong>&nbsp;de Manuten&ccedil;&atilde;o Anual (R$171 de economia)</div>
+          <div class="site-bonus-item"><strong>1 PraLink</strong>&nbsp;&mdash; gestor de links profissional incluso</div>
+        </div>
+        <div class="site-bonus-savings">Economia total desbloqueada: <strong>R$615</strong> em benef&iacute;cios</div>
+      </article>
+
+    </div>
+
+    <aside>
+      <article class="card summary-card">
+
+        <div class="summary-plan-head">
+          <div>
+            <h2 id="sum-tier">OTTO Solo Pro</h2>
+            <h2 style="font-size:14px;font-weight:500;color:var(--ink-3);margin-top:4px" id="sum-billing-label">Plano Mensal</h2>
+          </div>
+          <span class="status-pill">Online 24h</span>
+        </div>
+
+        <div class="summary-rows" id="summary-rows"></div>
+
+        <div class="total-block">
+          <div class="total-label">Valor a pagar agora</div>
+          <div class="total-row"><span class="tl">Valor total</span><span class="tv" id="total-card">—</span></div>
+        </div>
+
+        <!-- BÔNUS ANUAL -->
+        <div class="bonus-wrap" id="bonus-wrap">
+          <button class="btn-bonus" id="btn-bonus" onclick="redeemBonus()" type="button">
+            <span class="bonus-icon">&#127873;</span>
+            Resgatar B&#244;nus Exclusivo
+          </button>
+          <div class="bonus-success" id="bonus-success">
+            <span class="bonus-success-icon">&#9989;</span>
+            <div class="bonus-success-text">
+              <strong>SETUP Gratuito aplicado!</strong>
+              <span>B&#244;nus exclusivo do plano anual. Setup incluso sem custo adicional.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- BÔNUS OBTIDOS -->
+        <div class="bonus-obtained" id="bonus-obtained">
+          <div class="bonus-obtained-title">&#127873; B&ocirc;nus resgatados</div>
+          <div id="bonus-obtained-items"></div>
+        </div>
+
+        <div class="pay-block">
+          <div class="pay-block-title">Pagamento <span class="ptag" id="pay-tag">—</span></div>
+          <p class="pay-block-note" id="pay-note"></p>
+          <div class="pay-btns">
+            <a id="btn-card"   href="#" target="_blank" rel="noopener" class="btn-pay btn-coral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17" style="flex:0 0 17px"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> Pagar parcelado</a>
+            <a id="btn-avista" href="#" target="_blank" rel="noopener" class="btn-pay btn-outline"><svg viewBox="0 0 24 24" width="17" height="17" style="flex:0 0 17px" fill="currentColor"><path d="M11.07 2.93a1.32 1.32 0 011.86 0l2.36 2.36a.44.44 0 00.31.13h.93a2.64 2.64 0 012.64 2.64v.93c0 .12.05.23.13.31l2.36 2.36a1.32 1.32 0 010 1.86l-2.36 2.36a.44.44 0 00-.13.31v.93a2.64 2.64 0 01-2.64 2.64h-.93a.44.44 0 00-.31.13l-2.36 2.36a1.32 1.32 0 01-1.86 0l-2.36-2.36a.44.44 0 00-.31-.13h-.93A2.64 2.64 0 015.43 17v-.93a.44.44 0 00-.13-.31L2.94 13.4a1.32 1.32 0 010-1.86l2.36-2.36a.44.44 0 00.13-.31V8a2.64 2.64 0 012.64-2.64h.93a.44.44 0 00.31-.13l2.36-2.36z"/></svg> Pagar no PIX</a>
+          </div>
+        </div>
+
+        <div class="trust-bar">
+          <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Pagamento seguro</div>
+          <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Dados criptografados</div>
+          <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 7v5l3 2"/></svg>11 dias &uacute;teis</div>
+        </div>
+
+      </article>
+    </aside>
+  </div>
+
+  <p class="footnote">
+    D&uacute;vidas? Fale pelo WhatsApp
+    <a href="https://wa.me/5511963798901" target="_blank">(11) 96379-8901</a>
+    ou envie e-mail para <a href="mailto:agi@grupoagape.com.br">agi@grupoagape.com.br</a>
+  </p>
+</main>
+
+<script>
+const PLANS = {
+  start:{ tier:'Start', monthly:187, annual:150, annualTotal:1800, setup:{ n:10, amt:37, total:370, pix:296 }},
+  pro:  { tier:'Pro',   monthly:297, annual:240, annualTotal:2880, setup:{ n:10, amt:67, total:670, pix:536 }},
+  black:{ tier:'Black', monthly:447, annual:360, annualTotal:4320, setup:{ n:10, amt:87, total:870, pix:696, annualIncluded:true }},
+};
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   LINKS DE PAGAMENTO — substitua cada # pelo link gerado no Mercado Pago
+   Chave: plano_período_bumps
+     plano:   start | pro | black
+     período: m (mensal) | a (anual)
+     bumps:   0=nenhum | pl=só PraLink | ws=só Site | plws=PraLink+Site
+   O Mercado Pago deve conter o valor TOTAL de cada combinação.
+   Manutenção anual (R$57/mês) tem link próprio — sempre pago separado.
+══════════════════════════════════════════════════════════════════════════════ */
+const LINKS = {
+  start_m_0:    { card:'#MP_START_M_0_CARD',    pix:'#MP_START_M_0_PIX'    },
+  start_m_pl:   { card:'#MP_START_M_PL_CARD',   pix:'#MP_START_M_PL_PIX'   },
+  start_m_ws:   { card:'#MP_START_M_WS_CARD',   pix:'#MP_START_M_WS_PIX'   },
+  start_m_plws: { card:'#MP_START_M_PLWS_CARD', pix:'#MP_START_M_PLWS_PIX' },
+  start_a_0:    { card:'#MP_START_A_0_CARD',    pix:'#MP_START_A_0_PIX'    },
+  start_a_pl:   { card:'#MP_START_A_PL_CARD',   pix:'#MP_START_A_PL_PIX'   },
+  start_a_ws:   { card:'#MP_START_A_WS_CARD',   pix:'#MP_START_A_WS_PIX'   },
+  start_a_plws: { card:'#MP_START_A_PLWS_CARD', pix:'#MP_START_A_PLWS_PIX' },
+
+  pro_m_0:      { card:'#MP_PRO_M_0_CARD',      pix:'#MP_PRO_M_0_PIX'      },
+  pro_m_pl:     { card:'#MP_PRO_M_PL_CARD',     pix:'#MP_PRO_M_PL_PIX'     },
+  pro_m_ws:     { card:'#MP_PRO_M_WS_CARD',     pix:'#MP_PRO_M_WS_PIX'     },
+  pro_m_plws:   { card:'#MP_PRO_M_PLWS_CARD',   pix:'#MP_PRO_M_PLWS_PIX'   },
+  pro_a_0:      { card:'#MP_PRO_A_0_CARD',      pix:'#MP_PRO_A_0_PIX'      },
+  pro_a_pl:     { card:'#MP_PRO_A_PL_CARD',     pix:'#MP_PRO_A_PL_PIX'     },
+  pro_a_ws:     { card:'#MP_PRO_A_WS_CARD',     pix:'#MP_PRO_A_WS_PIX'     },
+  pro_a_plws:   { card:'#MP_PRO_A_PLWS_CARD',   pix:'#MP_PRO_A_PLWS_PIX'   },
+
+  black_m_0:    { card:'#MP_BLACK_M_0_CARD',    pix:'#MP_BLACK_M_0_PIX'    },
+  black_m_pl:   { card:'#MP_BLACK_M_PL_CARD',   pix:'#MP_BLACK_M_PL_PIX'   },
+  black_m_ws:   { card:'#MP_BLACK_M_WS_CARD',   pix:'#MP_BLACK_M_WS_PIX'   },
+  black_m_plws: { card:'#MP_BLACK_M_PLWS_CARD', pix:'#MP_BLACK_M_PLWS_PIX' },
+  black_a_0:    { card:'#MP_BLACK_A_0_CARD',    pix:'#MP_BLACK_A_0_PIX'    },
+  black_a_pl:   { card:'#MP_BLACK_A_PL_CARD',   pix:'#MP_BLACK_A_PL_PIX'   },
+  black_a_ws:   { card:'#MP_BLACK_A_WS_CARD',   pix:'#MP_BLACK_A_WS_PIX'   },
+  black_a_plws: { card:'#MP_BLACK_A_PLWS_CARD', pix:'#MP_BLACK_A_PLWS_PIX' },
+};
+/* Manutenção anual — link único independente de plano/billing */
+const LINK_MANUTENCAO = { card:'#MP_MANUTENCAO_CARD', pix:'#MP_MANUTENCAO_PIX' };
+
+const state = { plan:'pro', billing:'m', bumps: new Set(), upsell: false, bonus: false, bonusManutencao: false };
+
+
+function resetManutencaoPrice(){
+  const manutWas  = document.getElementById('manut-was');
+  const manutNow  = document.getElementById('manut-now');
+  const manutNote = document.getElementById('manut-note');
+  if(manutWas)  { manutWas.classList.remove('visible'); }
+  if(manutNow)  { manutNow.innerHTML = 'R$57<small>/mês</small>'; manutNow.classList.remove('discounted'); }
+  if(manutNote) { manutNote.textContent = 'Contrato anual · R$684/ano'; }
+}
+
+function redeemBonus(){
+  state.bonus = true;
+  document.getElementById('btn-bonus').disabled = true;
+  document.getElementById('btn-bonus').style.display = 'none';
+  document.getElementById('bonus-success').classList.add('visible');
+  applyBonuses();
+  render();
+}
+
+function applyBonuses(){
+  const isA    = state.billing==='a';
+  const isBlack = state.plan==='black';
+  const hasWS  = state.bumps.has('website');
+  const hasMan = state.upsell;
+  const items  = [];
+
+  // Black annual: setup gratuito
+  if(isBlack && isA){
+    items.push('Setup de implantação <strong>Gratuito</strong>');
+  }
+
+  // Site + Manutenção: 3 meses grátis → 12x R$42,75 + PraLink
+  if(hasWS && hasMan){
+    items.push('Manutenção: 3 meses grátis aplicados → <strong style="color:#22c55e">12× R$42,75/mês</strong>');
+    items.push('<strong>1 PraLink</strong> incluso gratuitamente');
+    // Update maintenance price display
+    const manutWas  = document.getElementById('manut-was');
+    const manutNow  = document.getElementById('manut-now');
+    const manutNote = document.getElementById('manut-note');
+    if(manutWas)  { manutWas.classList.add('visible'); }
+    if(manutNow)  { manutNow.innerHTML = 'R$42,75<small>/mês</small>'; manutNow.classList.add('discounted'); }
+    if(manutNote) { manutNote.textContent = 'Contrato anual · R$513/ano (3 meses grátis)'; }
+    state.bonusManutencao = true;
+  }
+
+  // Show obtained bonuses
+  const obtained = document.getElementById('bonus-obtained');
+  const itemsEl  = document.getElementById('bonus-obtained-items');
+  if(obtained && itemsEl && items.length){
+    itemsEl.innerHTML = items.map(i=>`<div class="bonus-obtained-item">${i}</div>`).join('');
+    obtained.classList.add('visible');
+  }
+}
+
+function selectPlan(id){
+  state.plan=id; state.bonus=false;
+  const btn=document.getElementById('btn-bonus'), suc=document.getElementById('bonus-success');
+  if(btn){btn.disabled=false;btn.style.display='';}
+  if(suc) suc.classList.remove('visible');
+  document.querySelectorAll('.plan-opt').forEach(el=>el.classList.toggle('selected',el.dataset.plan===id));
+  checkSiteBonus();
+  render();
+}
+function selectBilling(b){
+  state.billing=b;
+  document.querySelectorAll('.billing-opt').forEach(el=>el.classList.toggle('selected',el.dataset.billing===b));
+  checkSiteBonus();
+  if(b==='m'){
+    state.bonus=false; state.bonusManutencao=false;
+    const btn=document.getElementById('btn-bonus'), suc=document.getElementById('bonus-success');
+    if(btn){btn.disabled=false;btn.style.display='';}
+    if(suc) suc.classList.remove('visible');
+    document.getElementById('bonus-obtained')?.classList.remove('visible');
+    resetManutencaoPrice();
+  }
+  render();
+}
+function toggleBump(id){
+  state.bumps.has(id)?state.bumps.delete(id):state.bumps.add(id);
+  document.querySelectorAll('.bump-prod').forEach(el=>el.classList.toggle('selected',state.bumps.has(el.dataset.bump)));
+  const hasWs=state.bumps.has('website');
+  document.getElementById('upsell-section').classList.toggle('visible',hasWs);
+  if(!hasWs){
+    state.upsell=false;
+    document.getElementById('chk-manutencao').checked=false;
+    const bc=document.getElementById('site-bonus-card');
+    if(bc) bc.classList.remove('visible');
+  }
+  checkSiteBonus();
+  render();
+}
+function toggleUpsell(){
+  state.upsell=document.getElementById('chk-manutencao').checked;
+  checkSiteBonus();
+  render();
+}
+function checkSiteBonus(){
+  const card = document.getElementById('site-bonus-card');
+  if(!card) return;
+  const showBonus = state.bumps.has('website') && state.upsell;
+  card.classList.toggle('visible', showBonus);
+  // Show Black annual extra bonus pill inside the upsell card
+  const blackPill = document.getElementById('upsell-black-bonus');
+  if(blackPill) blackPill.classList.toggle('visible', state.plan==='black' && state.billing==='a');
+}
+function fmt(n){ return Number(n).toLocaleString('pt-BR'); }
+function sRow(l,v,note=false){ return '<div class="s-row'+(note?' note-row':'')+'"><span class="sl">'+l+'</span><span class="sv">'+v+'</span></div>'; }
+
+function getLinkKey(){
+  const pl=state.bumps.has('pralink'), ws=state.bumps.has('website');
+  const bk=pl&&ws?'plws':pl?'pl':ws?'ws':'0';
+  return state.plan+'_'+state.billing+'_'+bk;
+}
+
+function render(){
+  const plan=PLANS[state.plan]; const isA=state.billing==='a';
+  const hasPL=state.bumps.has('pralink'), hasWS=state.bumps.has('website');
+
+  document.getElementById('price-m').innerHTML='R$'+fmt(plan.monthly)+'<small>/mês</small>';
+  document.getElementById('price-a').innerHTML='R$'+fmt(plan.annual)+'<small>/mês</small>';
+  document.getElementById('sum-tier').textContent='OTTO Solo '+plan.tier;
+  document.getElementById('sum-billing-label').textContent=isA?'Plano Anual · 12 meses':'Plano Mensal';
+
+  /* Resumo */
+  let rows='';
+  if(isA){
+    rows+=sRow('Assinatura anual','12× R$'+fmt(plan.annual)+'/mês');
+    rows+=sRow('Total anual','R$'+fmt(plan.annualTotal));
+    if(state.plan==='black' && state.bonus){
+      rows+=sRow('Setup','<span style="color:var(--leaf);font-weight:700">Gratuito ✓ Bônus aplicado</span>');
+    } else if(state.plan==='black'){
+      rows+=sRow('Setup de implantação',plan.setup.n+'× R$'+fmt(plan.setup.amt)+' (R$'+fmt(plan.setup.total)+')');
+    } else {
+      rows+=sRow('Setup de implantação',plan.setup.n+'× R$'+fmt(plan.setup.amt)+' (R$'+fmt(plan.setup.total)+')');
+    }
+  } else {
+    rows+=sRow('Assinatura mensal','R$'+fmt(plan.monthly)+'/mês');
+    rows+=sRow('Setup de implantação',plan.setup.n+'× R$'+fmt(plan.setup.amt)+' (R$'+fmt(plan.setup.total)+')' );
+  }
+  if(hasPL){ rows+=sRow('+ PraLink','12× R$37 <span style="color:var(--muted);font-size:11px">(R$444)</span>'); }
+  if(hasWS){ rows+=sRow('+ Site de Corretor','12× R$55 <span style="color:var(--muted);font-size:11px">(R$660)</span>'); }
+  if(state.upsell&&hasWS){
+    const manutVal = (state.bonus && state.bonusManutencao)
+      ? '<span style="color:#22c55e;font-weight:700">12× R$42,75/mês <small style="color:var(--muted);text-decoration:line-through;font-weight:400">R$57</small></span>'
+      : '<span style="color:var(--coral-2)">R$57/mês · cobrado após publicação</span>';
+    rows+=sRow('+ Manutenção Anual', manutVal);
+    if(state.bonus && state.bonusManutencao){
+      rows+=sRow('+ PraLink','<span style="color:#22c55e;font-weight:700">Incluso ✓ Bônus</span>');
+    }
+  }
+  document.getElementById('summary-rows').innerHTML=rows;
+
+  /* Total único */
+  // bonus-wrap: show for Black annual OR site + manutenção selected
+  const hasManutencao = state.upsell && state.bumps.has('website');
+  const showBonusBtn  = (isA && state.plan==='black') || hasManutencao;
+  const bonusWrap = document.getElementById('bonus-wrap');
+  if(bonusWrap) bonusWrap.classList.toggle('visible', showBonusBtn && !state.bonus);
+
+  // total: annual always shows setup + subscription (except Black with bonus applied)
+  let baseCard;
+  if(isA && state.plan==='black' && state.bonus){ baseCard = plan.annualTotal; }
+  else if(isA){ baseCard = plan.annualTotal + plan.setup.total; }
+  else { baseCard = plan.setup.total; }
+  let cardTotal=baseCard;
+  if(hasPL){ cardTotal+=444; }
+  if(hasWS){ cardTotal+=660; }
+
+  let cardLabel = isA ? 'R$'+fmt(cardTotal) : plan.setup.n+'× R$'+fmt(plan.setup.amt);
+  if(!isA && (hasPL||hasWS)) cardLabel = 'R$'+fmt(cardTotal);
+  document.getElementById('total-card').innerHTML = cardLabel+(state.upsell&&hasWS?' <small>+ R$57/mês</small>':'');
+
+  /* Tag e nota */
+  const hasBumps=hasPL||hasWS;
+  document.getElementById('pay-tag').textContent = isA ? 'Assinatura anual' : 'Setup de implantação';
+  let note;
+  if(isA && state.plan==='black' && state.bonus){
+    note = 'Setup gratuito aplicado! O OTTO é ativado após configuração e validação — em até 11 dias úteis.';
+  } else if(isA){
+    note = 'Pague o setup e a assinatura anual para iniciar. O OTTO é ativado após configuração e validação — em até 11 dias úteis.';
+  } else {
+    note = 'Pague o setup para iniciar. A assinatura mensal começa após a entrega do OTTO.';
+  }
+  if(hasBumps) note += ' Produtos selecionados já incluídos no valor.';
+  if(state.upsell&&hasWS) note += ' A Manutenção Anual será cobrada a partir da publicação do site.';
+  document.getElementById('pay-note').textContent=note;
+
+  /* Links */
+  const lk=LINKS[getLinkKey()]||{card:'#',pix:'#'};
+  document.getElementById('btn-card').href   = lk.card;
+  document.getElementById('btn-avista').href = lk.pix;
+
+  /* Labels dos botões */
+  document.getElementById('btn-card').innerHTML   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17" style="flex:0 0 17px"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> ' + (hasBumps ? 'Pagar parcelado' : 'Pagar parcelado');
+  document.getElementById('btn-avista').innerHTML = '<svg viewBox="0 0 24 24" width="17" height="17" style="flex:0 0 17px" fill="currentColor"><path d="M11.07 2.93a1.32 1.32 0 011.86 0l2.36 2.36a.44.44 0 00.31.13h.93a2.64 2.64 0 012.64 2.64v.93c0 .12.05.23.13.31l2.36 2.36a1.32 1.32 0 010 1.86l-2.36 2.36a.44.44 0 00-.13.31v.93a2.64 2.64 0 01-2.64 2.64h-.93a.44.44 0 00-.31.13l-2.36 2.36a1.32 1.32 0 01-1.86 0l-2.36-2.36a.44.44 0 00-.31-.13h-.93A2.64 2.64 0 015.43 17v-.93a.44.44 0 00-.13-.31L2.94 13.4a1.32 1.32 0 010-1.86l2.36-2.36a.44.44 0 00.13-.31V8a2.64 2.64 0 012.64-2.64h.93a.44.44 0 00.31-.13l2.36-2.36z"/></svg> ' + (hasBumps ? 'Pagar no PIX' : 'Pagar no PIX');
+}
+render();
+
+  /* Pré-seleciona plano via URL ?plan=start|pro|black (solo) ou ?plan=one|pro|prime (biz) */
+  (function(){
+    const p = new URLSearchParams(window.location.search).get('plan');
+    if(p && PLANS[p]) selectPlan(p);
+  })();
+</script>
+</body>
+</html>
