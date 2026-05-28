@@ -419,7 +419,7 @@ img{max-width:100%;display:block}
             <span class="bonus-success-icon">✅</span>
             <div class="bonus-success-text">
               <strong>SETUP Gratuito aplicado!</strong>
-              <span>Bônus exclusivo do plano anual. Setup no valor de R$797 incluso sem custo adicional.</span>
+              <span id="bonus-eco-text">Bônus exclusivo do plano anual. Setup incluso sem custo adicional.</span>
             </div>
           </div>
         </div>
@@ -434,7 +434,7 @@ img{max-width:100%;display:block}
             <span class="bonus-success-icon">✅</span>
             <div class="bonus-success-text">
               <strong>SETUP Gratuito aplicado!</strong>
-              <span>Bônus exclusivo do plano anual.</span>
+              <span id="bonus-eco-text2">Bônus exclusivo do plano anual.</span>
             </div>
           </div>
         </div>
@@ -488,12 +488,13 @@ async function gerarLink(tipo) {
   const bumps = state.bumpOn ? [state.bumpType] : [];
   const plano = 'biz-' + state.plan + '-' + (state.billing === 'a' ? 'anual' : 'mensal');
   const quantidade = state.qty || 1;
+  const bonus = state.bonus || false;
 
   try {
-    const res = await fetch(API_URL, {
+    const res = await fetch(API_URL + '?tipo=' + tipo, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ plano, bumps, quantidade })
+      body: JSON.stringify({ plano, tipo, bumps, quantidade, bonus })
     });
     const data = await res.json();
     if (data.url) {
@@ -516,6 +517,13 @@ const state = { plan:'pro', billing:'m', bumpOn:false, qty:5, product:'pralink' 
 
 
 function redeemBonus(){
+  const SETUP_CARD = {one:1000, pro:1500, prime:2500};
+  const eco = SETUP_CARD[state.plan] || 0;
+  const ecoText = 'Setup no valor de R$'+eco+' incluso gratuitamente. 💰 Economia de R$'+eco+'!';
+  const el1 = document.getElementById('bonus-eco-text');
+  const el2 = document.getElementById('bonus-eco-text2');
+  if(el1) el1.textContent = ecoText;
+  if(el2) el2.textContent = ecoText;
   state.bonus = true;
   document.getElementById('btn-bonus').disabled = true;
   document.getElementById('btn-bonus').style.display = 'none';
@@ -658,7 +666,7 @@ function render(){
     document.getElementById('btn-avista').textContent = 'Finalizar via WhatsApp';
   } else {
     document.getElementById('btn-card').onclick   = (e) => { e.preventDefault(); gerarLink('card'); };
-    document.getElementById('btn-avista').onclick = (e) => { e.preventDefault(); gerarLink('pix'); };
+    document.getElementById('btn-avista').onclick = (e) => { e.preventDefault(); gerarLink('avista'); };
     document.getElementById('btn-card').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17" style="flex:0 0 17px"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> ${state.bumpOn?'Pagar parcelado':'Pagar parcelado'}`;
     document.getElementById('btn-avista').innerHTML = `<svg viewBox="0 0 24 24" width="17" height="17" style="flex:0 0 17px" fill="currentColor"><path d="M11.07 2.93a1.32 1.32 0 011.86 0l2.36 2.36a.44.44 0 00.31.13h.93a2.64 2.64 0 012.64 2.64v.93c0 .12.05.23.13.31l2.36 2.36a1.32 1.32 0 010 1.86l-2.36 2.36a.44.44 0 00-.13.31v.93a2.64 2.64 0 01-2.64 2.64h-.93a.44.44 0 00-.31.13l-2.36 2.36a1.32 1.32 0 01-1.86 0l-2.36-2.36a.44.44 0 00-.31-.13h-.93A2.64 2.64 0 015.43 17v-.93a.44.44 0 00-.13-.31L2.94 13.4a1.32 1.32 0 010-1.86l2.36-2.36a.44.44 0 00.13-.31V8a2.64 2.64 0 012.64-2.64h.93a.44.44 0 00.31-.13l2.36-2.36z"/></svg> ${state.bumpOn?'Pagar no PIX':'Pagar no PIX'}`;
   }
