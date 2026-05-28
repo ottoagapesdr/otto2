@@ -519,33 +519,15 @@ const state = { plan:'pro', billing:'m', bumpOn:false, qty:5, product:'pralink' 
 function redeemBonus(){
   const SETUP_CARD = {one:1000, pro:1500, prime:2500};
   const eco = SETUP_CARD[state.plan] || 0;
-  const ecoText = 'Setup no valor de R$'+eco+' incluso gratuitamente. 💰 Economia de R$'+eco+'!';
-  const el1 = document.getElementById('bonus-eco-text');
-  const el2 = document.getElementById('bonus-eco-text2');
-  if(el1) el1.textContent = ecoText;
-  if(el2) el2.textContent = ecoText;
+  const ecoText = 'Bônus exclusivo do plano anual. Você economiza R$'+fmt(eco)+' na contratação de seu plano.';
   state.bonus = true;
-  document.getElementById('btn-bonus').disabled = true;
-  document.getElementById('btn-bonus').style.display = 'none';
-  document.getElementById('bonus-success').classList.add('visible');
-  // Update success text with correct plan setup value
-  const plan = PLANS[state.plan];
-  const setupVal = plan.setup.card ? 'R$'+fmt(plan.setup.card) : '';
-  if(setupVal) document.querySelector('.bonus-success-text span').textContent =
-    'Bônus exclusivo do plano anual. Setup no valor de '+setupVal+' incluso sem custo adicional.';
-  render();
-}
-
-
-function redeemBonus(){
-  state.bonus = true;
-  document.getElementById('btn-bonus').disabled = true;
-  document.getElementById('btn-bonus').style.display = 'none';
-  document.getElementById('bonus-success').classList.add('visible');
-  const plan = PLANS[state.plan];
-  const setupVal = 'R$'+fmt(plan.setup.card);
-  document.querySelector('.bonus-success-text span').textContent =
-    'Bônus exclusivo do plano anual. Setup no valor de '+setupVal+' incluso sem custo adicional.';
+  // Atualiza todos os textos de bônus
+  document.querySelectorAll('.bonus-success-text span, #bonus-eco-text, #bonus-eco-text2').forEach(el => {
+    if(el) el.textContent = ecoText;
+  });
+  // Esconde botão, mostra confirmação
+  document.querySelectorAll('#btn-bonus').forEach(el => { el.disabled=true; el.style.display='none'; });
+  document.querySelectorAll('#bonus-success').forEach(el => el.classList.add('visible'));
   render();
 }
 
@@ -561,11 +543,10 @@ function selectPlan(id){
   // auto-apply bonus if already on annual billing
   if(state.billing==='a'){
     state.bonus=false; // reset first
-    const btn=document.getElementById('btn-bonus');
-    const suc=document.getElementById('bonus-success');
-    if(btn){btn.disabled=false;btn.style.display='';}
-    if(suc) suc.classList.remove('visible');
-    redeemBonus();
+    document.querySelectorAll('#btn-bonus').forEach(el => { el.disabled=false; el.style.display=''; });
+    document.querySelectorAll('#bonus-success').forEach(el => el.classList.remove('visible'));
+    render();
+    setTimeout(() => redeemBonus(), 50);
     return;
   }
   render();
@@ -580,10 +561,11 @@ function selectBilling(b){
     const suc=document.getElementById('bonus-success');
     if(btn){btn.disabled=false;btn.style.display='';}
     if(suc) suc.classList.remove('visible');
-  } else if(b==='a' && state.plan !== 'prime'){
-    // auto-apply bonus when annual selected (non-prime plans)
-    redeemBonus();
-    return; // redeemBonus already calls render()
+  } else if(b==='a'){
+    // render primeiro para mostrar o bonus-wrap, depois aplica o bônus
+    render();
+    setTimeout(() => redeemBonus(), 50);
+    return;
   }
   render();
 }
