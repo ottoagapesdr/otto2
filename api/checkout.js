@@ -69,7 +69,10 @@ module.exports = async function handler(req, res) {
     if (!config) return sendJson(res, 400, { erro: `Plano inválido: ${plano}` });
 
     // Valor base conforme tipo de pagamento
-    const valorBase = tipo === 'pix' ? config.pix : config.card;
+    // Se bônus ativo em plano anual Business → desconta o setup (já incluso grátis)
+    const SETUP_BIZ = { 'biz-one-anual':1000, 'biz-pro-anual':1500, 'biz-prime-anual':2500 };
+    const setupDesconto = (bonus && SETUP_BIZ[chave]) ? SETUP_BIZ[chave] : 0;
+    const valorBase = (tipo === 'pix' ? config.pix : config.card) - setupDesconto;
 
     const items = [{
       id: chave,

@@ -630,18 +630,21 @@ function applyBonuses(){
   const hasMan = state.upsell;
   const items  = [];
 
+  // Calcula economia total acumulada
+  let totalEco = 0;
+
   // Black annual: setup gratuito
   if(isBlack && isA){
-    const setupEco = state.billing==='a' ? PLANS.black.setup.total : 0;
+    const setupEco = PLANS.black.setup.total || 870;
+    totalEco += setupEco;
     items.push('Setup de implantação <strong>Gratuito</strong> <small style="color:var(--muted)">(R$'+setupEco+' grátis)</small>');
-    items.push('<span style="color:var(--yellow);font-weight:800;font-size:13px">💰 Economia total: R$'+setupEco+' em benefícios</span>');
   }
 
   // Site + Manutenção: 3 meses grátis → 12x R$42,75 + PraLink
   if(hasWS && hasMan){
+    totalEco += 615;
     items.push('Manutenção: 3 meses grátis aplicados → <strong style="color:#22c55e">12× R$42,75/mês</strong> <small style="color:var(--muted)">(R$171 grátis)</small>');
     items.push('<strong>1 PraLink</strong> incluso gratuitamente <small style="color:var(--muted)">(R$444 grátis)</small>');
-    items.push('<span style="color:var(--yellow);font-weight:800;font-size:13px">💰 Economia total: R$615 em benefícios</span>');
     // Update maintenance price display
     const manutWas  = document.getElementById('manut-was');
     const manutNow  = document.getElementById('manut-now');
@@ -650,6 +653,11 @@ function applyBonuses(){
     if(manutNow)  { manutNow.innerHTML = 'R$42,75<small>/mês</small>'; manutNow.classList.add('discounted'); }
     if(manutNote) { manutNote.textContent = 'Contrato anual · R$513/ano (3 meses grátis)'; }
     state.bonusManutencao = true;
+  }
+
+  // Adiciona linha de economia total ao final
+  if(totalEco > 0){
+    items.push('<span style="color:var(--yellow);font-weight:800;font-size:13px">💰 Economia total: R$'+totalEco+' em benefícios</span>');
   }
 
   // Show obtained bonuses
