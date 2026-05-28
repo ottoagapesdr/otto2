@@ -6,141 +6,63 @@
 <title>Pagamento Confirmado | OTTO</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
-  :root{
-    --bg:#0a0a0a;--card:#111;--line:#1e1e1e;
-    --coral:#FF5A1F;--leaf:#22c55e;--yellow:#F5C24A;
-    --ink:#fff;--ink-3:#888;--r:14px;
-  }
+  :root{--bg:#0a0a0a;--card:#111;--line:#1e1e1e;--coral:#FF5A1F;--leaf:#22c55e;--yellow:#F5C24A;--ink:#fff;--ink-3:#888;--r:14px;}
   *{margin:0;padding:0;box-sizing:border-box}
   body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;min-height:100vh;}
-
-  /* Layout */
-  .page{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;gap:0;}
+  .page{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;}
   .content{max-width:560px;width:100%;padding:40px 24px 60px;flex-shrink:0;}
-  .otto-col{width:320px;flex-shrink:0;position:sticky;top:0;height:100vh;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;pointer-events:none;}
-
-  /* OTTO character */
-  .otto-img-wrap{position:relative;width:100%;height:100%;}
-  .otto-img-wrap img{
-    position:absolute;
-    bottom:0;left:50%;
-    transform:translateX(-50%);
-    width:auto;
-    height:95%;
-    max-width:none;
-    display:block;
-    mix-blend-mode:lighten;
-    animation:slideIn .8s .2s cubic-bezier(.34,1.3,.64,1) both;
-  }
-  @keyframes slideIn{from{opacity:0;transform:translateX(-50%) translateY(30px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-
-  /* Fade nas pernas */
-  .otto-img-wrap::after{
-    content:'';
-    position:absolute;
-    bottom:0;left:0;right:0;
-    height:40%;
-    background:linear-gradient(to top,
-      #0a0a0a 0%,
-      #0a0a0a 20%,
-      rgba(10,10,10,.9) 45%,
-      rgba(10,10,10,.3) 75%,
-      transparent 100%);
-    pointer-events:none;
-    z-index:2;
-  }
-
-  /* Logo */
-  .logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--coral);margin-bottom:32px;letter-spacing:-.02em;animation:fadeUp .4s both ease;}
-
-  /* Icon */
+  .otto-col{width:320px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow:hidden;pointer-events:none;}
+  .otto-col img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:95%;width:auto;max-width:none;mix-blend-mode:lighten;animation:slideIn .8s .2s both cubic-bezier(.34,1.3,.64,1);}
+  @keyframes slideIn{from{opacity:0;transform:translateX(-50%) translateY(40px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+  .otto-fade{position:absolute;bottom:0;left:0;right:0;height:42%;background:linear-gradient(to top,#0a0a0a 0%,#0a0a0a 18%,rgba(10,10,10,.88) 42%,rgba(10,10,10,.35) 72%,transparent 100%);z-index:10;}
+  .logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--coral);margin-bottom:32px;letter-spacing:-.02em;animation:fadeUp .4s both;}
   .icon-wrap{width:72px;height:72px;border-radius:50%;background:rgba(34,197,94,.12);border:2px solid rgba(34,197,94,.3);display:flex;align-items:center;justify-content:center;margin-bottom:24px;animation:pop .5s cubic-bezier(.34,1.56,.64,1);}
   @keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
   .icon-wrap svg{width:32px;height:32px;color:var(--leaf);}
-
-  h1{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:8px;animation:fadeUp .5s .1s both ease;}
-  .subtitle{color:var(--ink-3);font-size:14px;line-height:1.6;margin-bottom:28px;animation:fadeUp .5s .2s both ease;}
+  h1{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:8px;animation:fadeUp .5s .1s both;}
+  .subtitle{color:var(--ink-3);font-size:14px;line-height:1.6;margin-bottom:28px;animation:fadeUp .5s .2s both;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-  /* Cards */
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-bottom:14px;text-align:left;animation:fadeUp .5s .3s both ease;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-bottom:14px;text-align:left;animation:fadeUp .5s .3s both;}
   .card-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:14px;}
   .step{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);}
   .step:last-child{border-bottom:none;padding-bottom:0;}
   .step-num{width:26px;height:26px;border-radius:50%;background:rgba(255,90,31,.12);border:1px solid rgba(255,90,31,.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--coral);flex-shrink:0;margin-top:1px;}
   .step-text strong{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px;}
   .step-text span{font-size:12px;color:var(--ink-3);line-height:1.5;}
-
-  .prazo-card{background:rgba(245,194,74,.06);border:1px solid rgba(245,194,74,.2);border-radius:var(--r);padding:16px 18px;margin-bottom:14px;animation:fadeUp .5s .4s both ease;display:flex;gap:12px;align-items:flex-start;}
+  .prazo-card{background:rgba(245,194,74,.06);border:1px solid rgba(245,194,74,.2);border-radius:var(--r);padding:16px 18px;margin-bottom:14px;animation:fadeUp .5s .4s both;display:flex;gap:12px;align-items:flex-start;}
   .prazo-text strong{display:block;font-size:12px;font-weight:700;color:var(--yellow);margin-bottom:3px;}
   .prazo-text span{font-size:12px;color:var(--ink-3);line-height:1.5;}
-
-  .contact-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 22px;margin-bottom:24px;animation:fadeUp .5s .5s both ease;}
+  .contact-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 22px;margin-bottom:24px;animation:fadeUp .5s .5s both;}
   .contact-title{font-size:12px;color:var(--ink-3);margin-bottom:10px;}
   .contacts{display:flex;gap:10px;flex-wrap:wrap;}
   .contact-btn{display:flex;align-items:center;gap:7px;padding:9px 14px;border-radius:8px;border:1px solid var(--line);font-size:12px;font-weight:500;color:var(--ink);text-decoration:none;transition:border-color .2s;}
   .contact-btn:hover{border-color:var(--coral);}
-
-  .btn-home{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:99px;background:var(--coral);color:#fff;font-size:14px;font-weight:700;text-decoration:none;transition:opacity .2s;animation:fadeUp .5s .6s both ease;}
+  .btn-home{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:99px;background:var(--coral);color:#fff;font-size:14px;font-weight:700;text-decoration:none;transition:opacity .2s;animation:fadeUp .5s .6s both;}
   .btn-home:hover{opacity:.85;}
-
-  /* Mobile */
   @media(max-width:760px){
-    .page{flex-direction:column-reverse;align-items:center;}
-    .otto-col{width:100%;height:280px;position:relative;}
-    .otto-img-wrap img{height:280px;width:auto;margin:0 auto;}
+    .page{flex-direction:column-reverse;}
+    .otto-col{width:100%;height:260px;position:relative;}
+    .otto-col img{height:260px;}
     .content{padding:24px 20px 48px;}
   }
 </style>
 </head>
 <body>
 <div class="page">
-
-  <!-- Conteúdo -->
   <div class="content">
     <div class="logo">OTTO</div>
-
     <div class="icon-wrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="20 6 9 17 4 12"/>
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
-
     <h1>Pedido recebido!</h1>
     <p class="subtitle">Seu pagamento está sendo processado. Em breve você receberá todas as instruções no e-mail cadastrado.</p>
-
     <div class="card">
       <div class="card-title">Como funciona a implantação</div>
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-text">
-          <strong>Confirmação do pagamento</strong>
-          <span>Após confirmado, você recebe um e-mail com o link de onboarding e todas as instruções.</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-text">
-          <strong>Reunião de briefing</strong>
-          <span>Nossa equipe agenda uma reunião para entender seu negócio e configurar o OTTO.</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-text">
-          <strong>Configuração e testes</strong>
-          <span>Configuramos, testamos e validamos cada etapa — entrega em até 11 dias úteis.</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-text">
-          <strong>OTTO no ar!</strong>
-          <span>Seu assistente atende leads 24h no WhatsApp. Assinatura ativa após a entrega.</span>
-        </div>
-      </div>
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Confirmação do pagamento</strong><span>Após confirmado, você recebe um e-mail com o link de onboarding e todas as instruções.</span></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Reunião de briefing</strong><span>Nossa equipe agenda uma reunião para entender seu negócio e configurar o OTTO.</span></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Configuração e testes</strong><span>Configuramos, testamos e validamos cada etapa — entrega em até 11 dias úteis.</span></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text"><strong>OTTO no ar!</strong><span>Seu assistente atende leads 24h no WhatsApp. Assinatura ativa após a entrega.</span></div></div>
     </div>
-
     <div class="prazo-card">
       <div style="font-size:20px;flex-shrink:0">⏱️</div>
       <div class="prazo-text">
@@ -148,7 +70,6 @@
         <span><b>PIX:</b> imediato · <b>Cartão:</b> até 2 dias úteis · <b>Boleto:</b> até 3 dias úteis após o pagamento.</span>
       </div>
     </div>
-
     <div class="contact-card">
       <div class="contact-title">Dúvidas? Fale com a gente</div>
       <div class="contacts">
@@ -162,20 +83,14 @@
         </a>
       </div>
     </div>
-
-    <a class="btn-home" href="/">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Voltar ao início
-    </a>
+    <a class="btn-home" href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Voltar ao início</a>
   </div>
 
   <!-- OTTO -->
   <div class="otto-col">
-    <div class="otto-img-wrap">
-      <img src="assets/OTTO_acenando.png" alt="OTTO acenando"/>
-    </div>
+    <img src="assets/OTTO_acenando.png" alt="OTTO acenando"/>
+    <div class="otto-fade"></div>
   </div>
-
 </div>
 </body>
 </html>
