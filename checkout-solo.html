@@ -745,7 +745,7 @@ function render(){
       : '<span style="color:var(--coral-2)">R$57/mês · cobrado após publicação</span>';
     rows+=sRow('+ Manutenção Anual', manutVal);
     if(state.bonus && state.bonusManutencao){
-      rows+=sRow('+ PraLink','<span style="color:#22c55e;font-weight:700">Incluso ✓ Bônus</span>');
+      rows+=sRow('+ PraLink','<span style="color:#22c55e;font-weight:700">Incluso ✓ Bônus</span> <small style="color:var(--muted);font-size:11px">(economia de R$444)</small>');
     }
   }
   document.getElementById('summary-rows').innerHTML=rows;
