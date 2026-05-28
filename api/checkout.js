@@ -58,8 +58,10 @@ module.exports = async function handler(req, res) {
       try { bodyParsed = JSON.parse(bodyParsed); } catch { bodyParsed = {}; }
     }
 
-    const { plano, tipo = 'card', bumps = [], quantidade = 1, bonus = false } = bodyParsed;
-    console.log('[OTTO] body recebido:', JSON.stringify({ plano, tipo, bumps, bonus }));
+    const tipoQuery = req.query?.tipo || '';
+    const { plano, tipo: tipoBody = 'card', bumps = [], quantidade = 1, bonus = false } = bodyParsed;
+    const tipo = tipoQuery || tipoBody;
+    console.log('[OTTO] tipo recebido:', tipo, '| plano:', plano, '| bumps:', bumps);
 
     // Resolve chave correta (bonus no Black anual)
     const chave = (plano === 'solo-black-anual' && bonus) ? 'solo-black-anual-bonus' : plano;

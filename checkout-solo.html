@@ -581,10 +581,10 @@ async function gerarLink(tipo) {
   const plano = 'solo-' + state.plan + '-' + (state.billing === 'a' ? 'anual' : 'mensal');
 
   try {
-    const res = await fetch(API_URL, {
+    const res = await fetch(API_URL + '?tipo=' + tipo, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ plano, bumps })
+      body: JSON.stringify({ plano, tipo, bumps, bonus })
     });
     const data = await res.json();
     if (data.url) {
