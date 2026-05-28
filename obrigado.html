@@ -9,15 +9,16 @@
   :root{--bg:#0a0a0a;--card:#111;--line:#1e1e1e;--coral:#FF5A1F;--leaf:#22c55e;--yellow:#F5C24A;--ink:#fff;--ink-3:#888;--r:14px;}
   *{margin:0;padding:0;box-sizing:border-box}
   body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;min-height:100vh;}
-  .page{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;}
-  .content{max-width:560px;width:100%;padding:40px 24px 60px;flex-shrink:0;}
+  .page{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;max-width:1100px;margin:0 auto;}
+  .content{max-width:600px;width:100%;padding:40px 32px 60px;flex:1;min-width:0;}
 
   /* OTTO col */
   .otto-col{
-    width:320px;flex-shrink:0;
+    width:340px;flex-shrink:0;
     position:sticky;top:0;
     height:100vh;
     display:flex;align-items:flex-end;justify-content:center;
+    overflow:hidden;
     pointer-events:none;
   }
   #otto-canvas{
@@ -110,9 +111,10 @@
   var img = new Image();
   img.src = 'assets/OTTO_acenando.png';
   img.onload = function(){
-    var h = window.innerHeight * 0.92;
+    var maxW = 340;
     var ratio = img.naturalWidth / img.naturalHeight;
-    var w = h * ratio;
+    var w = Math.min(maxW, window.innerHeight * 0.92 * ratio);
+    var h = w / ratio;
     canvas.width = w;
     canvas.height = h;
     canvas.style.width = w + 'px';
@@ -120,12 +122,13 @@
     var ctx = canvas.getContext('2d');
     ctx.drawImage(img, 0, 0, w, h);
     // Aplicar gradiente de fade nas pernas (bottom 35%)
-    var grad = ctx.createLinearGradient(0, h * 0.65, 0, h);
+    var grad = ctx.createLinearGradient(0, h * 0.55, 0, h);
     grad.addColorStop(0, 'rgba(10,10,10,0)');
-    grad.addColorStop(0.5, 'rgba(10,10,10,0.7)');
+    grad.addColorStop(0.4, 'rgba(10,10,10,0.5)');
+    grad.addColorStop(0.75, 'rgba(10,10,10,0.9)');
     grad.addColorStop(1, 'rgba(10,10,10,1)');
     ctx.fillStyle = grad;
-    ctx.fillRect(0, h * 0.65, w, h * 0.35);
+    ctx.fillRect(0, h * 0.55, w, h * 0.45);
   };
 })();
 </script>
