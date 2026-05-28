@@ -485,7 +485,7 @@ async function gerarLink(tipo) {
   btn.style.pointerEvents = 'none';
   btn.style.opacity = '0.7';
 
-  const bumps = state.bumpOn ? [state.bumpType] : [];
+  const bumps = state.bumpOn ? [state.product || 'pralink'] : [];
   const plano = 'biz-' + state.plan + '-' + (state.billing === 'a' ? 'anual' : 'mensal');
   const quantidade = state.qty || 1;
   const bonus = state.bonus || false;
@@ -558,18 +558,32 @@ function selectPlan(id){
   if(btn){btn.disabled=false;btn.style.display='';}
   if(suc) suc.classList.remove('visible');
   document.querySelectorAll('.plan-opt').forEach(el=>el.classList.toggle('selected',el.dataset.plan===id));
+  // auto-apply bonus if already on annual billing
+  if(state.billing==='a'){
+    state.bonus=false; // reset first
+    const btn=document.getElementById('btn-bonus');
+    const suc=document.getElementById('bonus-success');
+    if(btn){btn.disabled=false;btn.style.display='';}
+    if(suc) suc.classList.remove('visible');
+    redeemBonus();
+    return;
+  }
   render();
 }
 function selectBilling(b){
   state.billing=b;
   document.querySelectorAll('.billing-opt').forEach(el=>el.classList.toggle('selected',el.dataset.billing===b));
-  // reset bonus when switching to monthly
   if(b==='m'){
+    // reset bonus when switching to monthly
     state.bonus=false;
     const btn=document.getElementById('btn-bonus');
     const suc=document.getElementById('bonus-success');
     if(btn){btn.disabled=false;btn.style.display='';}
     if(suc) suc.classList.remove('visible');
+  } else if(b==='a' && state.plan !== 'prime'){
+    // auto-apply bonus when annual selected (non-prime plans)
+    redeemBonus();
+    return; // redeemBonus already calls render()
   }
   render();
 }
