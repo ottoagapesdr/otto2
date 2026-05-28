@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Pagamento Confirmado | OTTO</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
+  :root{
+    --bg:#0a0a0a;--card:#111;--line:#1e1e1e;
+    --coral:#FF5A1F;--coral-2:#ff7a47;
+    --leaf:#22c55e;--yellow:#F5C24A;
+    --ink:#fff;--ink-2:#ccc;--ink-3:#888;
+    --r:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 16px;}
+  .wrap{max-width:560px;width:100%;text-align:center;}
+
+  /* Icon */
+  .icon-wrap{width:80px;height:80px;border-radius:50%;background:rgba(34,197,94,.12);border:2px solid rgba(34,197,94,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;animation:pop .5s cubic-bezier(.34,1.56,.64,1);}
+  @keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+  .icon-wrap svg{width:36px;height:36px;color:var(--leaf);}
+
+  h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;margin-bottom:8px;animation:fadeUp .5s .1s both ease;}
+  .subtitle{color:var(--ink-3);font-size:15px;line-height:1.6;margin-bottom:32px;animation:fadeUp .5s .2s both ease;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;margin-bottom:16px;text-align:left;animation:fadeUp .5s .3s both ease;}
+  .card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:16px;}
+  .step{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);}
+  .step:last-child{border-bottom:none;padding-bottom:0;}
+  .step-num{width:28px;height:28px;border-radius:50%;background:rgba(255,90,31,.12);border:1px solid rgba(255,90,31,.3);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--coral);flex-shrink:0;margin-top:1px;}
+  .step-text strong{display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+  .step-text span{font-size:13px;color:var(--ink-3);line-height:1.5;}
+
+  .prazo-card{background:rgba(245,194,74,.06);border:1px solid rgba(245,194,74,.2);border-radius:var(--r);padding:18px 20px;margin-bottom:16px;animation:fadeUp .5s .4s both ease;display:flex;gap:14px;align-items:flex-start;}
+  .prazo-icon{font-size:22px;flex-shrink:0;}
+  .prazo-text strong{display:block;font-size:13px;font-weight:700;color:var(--yellow);margin-bottom:4px;}
+  .prazo-text span{font-size:13px;color:var(--ink-3);line-height:1.5;}
+
+  .contact-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 24px;margin-bottom:28px;animation:fadeUp .5s .5s both ease;}
+  .contact-title{font-size:13px;color:var(--ink-3);margin-bottom:12px;}
+  .contacts{display:flex;gap:12px;flex-wrap:wrap;}
+  .contact-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:8px;border:1px solid var(--line);font-size:13px;font-weight:500;color:var(--ink);text-decoration:none;transition:border-color .2s;}
+  .contact-btn:hover{border-color:var(--coral);}
+  .contact-btn svg{width:16px;height:16px;flex-shrink:0;}
+
+  .btn-home{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:99px;background:var(--coral);color:#fff;font-size:14px;font-weight:700;text-decoration:none;transition:opacity .2s;animation:fadeUp .5s .6s both ease;}
+  .btn-home:hover{opacity:.85;}
+
+  .logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--coral);margin-bottom:36px;letter-spacing:-.02em;animation:fadeUp .4s both ease;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">OTTO</div>
+
+  <div class="icon-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  </div>
+
+  <h1>Pedido recebido!</h1>
+  <p class="subtitle">Seu pagamento está sendo processado. Em breve você receberá<br>todas as instruções no e-mail cadastrado.</p>
+
+  <div class="card">
+    <div class="card-title">Como funciona a implantação</div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">
+        <strong>Confirmação do pagamento</strong>
+        <span>Após a confirmação, você receberá um e-mail com o link de onboarding e todas as instruções para iniciar.</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">
+        <strong>Reunião de briefing</strong>
+        <span>Nossa equipe agendará uma reunião para entender seu negócio e configurar o OTTO do jeito certo para você.</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">
+        <strong>Configuração e testes</strong>
+        <span>Configuramos, testamos e validamos cada etapa do atendimento — com até 11 dias úteis para a entrega.</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">
+        <strong>OTTO no ar!</strong>
+        <span>Seu assistente começa a atender leads 24h no WhatsApp. A assinatura mensal é ativada após a entrega.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="prazo-card">
+    <div class="prazo-icon">⏱️</div>
+    <div class="prazo-text">
+      <strong>Prazo de confirmação do pagamento</strong>
+      <span><b>PIX:</b> imediato · <b>Cartão de crédito:</b> até 2 dias úteis · <b>Boleto:</b> até 3 dias úteis após o pagamento.</span>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <div class="contact-title">Dúvidas? Fale com a gente</div>
+    <div class="contacts">
+      <a class="contact-btn" href="https://wa.me/5511963798901" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        (11) 96379-8901
+      </a>
+      <a class="contact-btn" href="mailto:agi@grupoagape.com.br">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        agi@grupoagape.com.br
+      </a>
+    </div>
+  </div>
+
+  <a class="btn-home" href="/">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Voltar ao início
+  </a>
+</div>
+</body>
+</html>
