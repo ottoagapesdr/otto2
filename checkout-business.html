@@ -542,12 +542,7 @@ function selectPlan(id){
   document.querySelectorAll('.plan-opt').forEach(el=>el.classList.toggle('selected',el.dataset.plan===id));
   // auto-apply bonus if already on annual billing
   if(state.billing==='a'){
-    state.bonus=false; // reset first
-    document.querySelectorAll('#btn-bonus').forEach(el => { el.disabled=false; el.style.display=''; });
-    document.querySelectorAll('#bonus-success').forEach(el => el.classList.remove('visible'));
-    render();
-    setTimeout(() => redeemBonus(), 50);
-    return;
+    state.bonus=false; // reset so render() re-applies
   }
   render();
 }
@@ -562,10 +557,7 @@ function selectBilling(b){
     if(btn){btn.disabled=false;btn.style.display='';}
     if(suc) suc.classList.remove('visible');
   } else if(b==='a'){
-    // render primeiro para mostrar o bonus-wrap, depois aplica o bônus
-    render();
-    setTimeout(() => redeemBonus(), 50);
-    return;
+    // bonus is auto-applied inside render()
   }
   render();
 }
@@ -634,8 +626,28 @@ function render(){
   document.getElementById('total-card').innerHTML = cardLabel + parcelaInfo;
 
   /* Tag e nota */
+  // Auto-apply bonus when annual is selected
+  if(isA && !state.bonus){
+    state.bonus = true;
+  }
   const bonusWrap = document.getElementById('bonus-wrap');
   if(bonusWrap) bonusWrap.classList.toggle('visible', isA);
+
+  // Sync bonus UI state
+  if(isA && state.bonus){
+    const SETUP_CARD = {one:1000, pro:1500, prime:2500};
+    const eco = SETUP_CARD[state.plan] || 0;
+    const ecoText = 'Bônus exclusivo do plano anual. Você economiza R$'+fmt(eco)+' na contratação de seu plano.';
+    document.querySelectorAll('#btn-bonus').forEach(el => { el.disabled=true; el.style.display='none'; });
+    document.querySelectorAll('#bonus-success').forEach(el => {
+      el.classList.add('visible');
+      const span = el.querySelector('span');
+      if(span) span.textContent = ecoText;
+    });
+  } else if(!isA){
+    document.querySelectorAll('#btn-bonus').forEach(el => { el.disabled=false; el.style.display=''; });
+    document.querySelectorAll('#bonus-success').forEach(el => el.classList.remove('visible'));
+  }
 
   let tag, note;
   if(isA && state.bonus){
