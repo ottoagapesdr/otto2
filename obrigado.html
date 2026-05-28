@@ -11,10 +11,28 @@
   body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;min-height:100vh;}
   .page{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;}
   .content{max-width:560px;width:100%;padding:40px 24px 60px;flex-shrink:0;}
-  .otto-col{width:320px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow:hidden;pointer-events:none;}
-  .otto-col img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:95%;width:auto;max-width:none;mix-blend-mode:lighten;animation:slideIn .8s .2s both cubic-bezier(.34,1.3,.64,1);}
-  @keyframes slideIn{from{opacity:0;transform:translateX(-50%) translateY(40px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-  .otto-fade{position:absolute;bottom:0;left:0;right:0;height:42%;background:linear-gradient(to top,#0a0a0a 0%,#0a0a0a 18%,rgba(10,10,10,.88) 42%,rgba(10,10,10,.35) 72%,transparent 100%);z-index:10;}
+
+  /* OTTO col */
+  .otto-col{
+    width:320px;flex-shrink:0;
+    position:sticky;top:0;
+    height:100vh;
+    display:flex;align-items:flex-end;justify-content:center;
+    pointer-events:none;
+  }
+  .otto-col img{
+    display:block;
+    height:92vh;
+    width:auto;
+    mix-blend-mode:lighten;
+    animation:slideIn .8s .2s both cubic-bezier(.34,1.3,.64,1);
+    /* Fade nas pernas via mask */
+    -webkit-mask-image:linear-gradient(to top, transparent 0%, transparent 12%, black 35%, black 100%);
+    mask-image:linear-gradient(to top, transparent 0%, transparent 12%, black 35%, black 100%);
+  }
+  @keyframes slideIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+
+  /* Conteúdo */
   .logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--coral);margin-bottom:32px;letter-spacing:-.02em;animation:fadeUp .4s both;}
   .icon-wrap{width:72px;height:72px;border-radius:50%;background:rgba(34,197,94,.12);border:2px solid rgba(34,197,94,.3);display:flex;align-items:center;justify-content:center;margin-bottom:24px;animation:pop .5s cubic-bezier(.34,1.56,.64,1);}
   @keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
@@ -41,7 +59,7 @@
   .btn-home:hover{opacity:.85;}
   @media(max-width:760px){
     .page{flex-direction:column-reverse;}
-    .otto-col{width:100%;height:260px;position:relative;}
+    .otto-col{width:100%;height:auto;position:relative;justify-content:center;}
     .otto-col img{height:260px;}
     .content{padding:24px 20px 48px;}
   }
@@ -85,11 +103,8 @@
     </div>
     <a class="btn-home" href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Voltar ao início</a>
   </div>
-
-  <!-- OTTO -->
   <div class="otto-col">
     <img src="assets/OTTO_acenando.png" alt="OTTO acenando"/>
-    <div class="otto-fade"></div>
   </div>
 </div>
 </body>
